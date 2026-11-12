@@ -4,6 +4,7 @@ import { categories } from "./data/categories.js";
 
 import { showPage } from "./modules/navigation.js";
 
+import {initializeProductForm} from "./modules/productUpload.js";
 
 // ================================
 // Render Categories
@@ -105,7 +106,11 @@ function initApp() {
 
     handleNavigation();
 
+    handleAdminNavigation();
+
     handleCategoryClick();
+
+    initializeProductForm();
 
 }
 
@@ -117,3 +122,32 @@ $(document).ready(function () {
     initApp();
 
 });
+
+
+function handleAdminNavigation() {
+    const adminPages = {
+        overview: "#adminOverview",
+        products: "#adminProducts",
+        orders: "#adminOrders",
+        users: "#adminUsers",
+        reviews: "#adminReviews"
+    };
+
+    $(document).on("click", "[data-admin-page]", function () {
+        const page = $(this).data("admin-page");
+
+        // Hide all admin sections
+        $(".admin-section").addClass("hidden");
+
+        // Show selected section
+        const selectedSection = adminPages[page];
+
+        if (selectedSection) {
+            $(selectedSection).removeClass("hidden");
+        } else {
+            console.error("Admin section not found:", page);
+        }
+
+        console.log("Admin page:", page);
+    });
+}

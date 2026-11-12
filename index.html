@@ -516,21 +516,161 @@
 
                     <!-- Manage Products -->
 
-                    <div id="adminProducts" class="admin-section hidden">
+                  <div id="adminProducts" class="admin-section hidden">
 
-                        <h2>Manage Products</h2>
+    <h2>Manage Products</h2>
 
-                        <button id="addProductBtn" class="btn-primary">
-                            Add New Product
-                        </button>
+    <button id="addProductBtn" class="btn-primary">
+        <i class="fa-solid fa-plus"></i>
+        Add New Product
+    </button>
 
-                        <div id="adminProductsContainer">
 
-                            <!-- Products management table -->
+    <!-- Add Product Form -->
 
-                        </div>
+    <form id="productForm" class="product-form hidden">
 
-                    </div>
+        <h3>Add New Product</h3>
+
+        <!-- Product Name -->
+
+        <div class="form-group">
+            <label for="productName">Product Name</label>
+
+            <input
+                type="text"
+                id="productName"
+                placeholder="Enter product name"
+                required
+            >
+        </div>
+
+
+        <!-- Product Image -->
+
+        <div class="form-group">
+            <label for="productImage">Product Image</label>
+
+            <input
+                type="file"
+                id="productImage"
+                accept="image/*"
+                required
+            >
+
+            <img
+                id="imagePreview"
+                class="image-preview hidden"
+                alt="Product Preview"
+            >
+        </div>
+
+
+        <!-- Category -->
+
+        <div class="form-group">
+            <label for="productCategory">Category</label>
+
+            <select id="productCategory" required>
+
+                <option value="">Select Category</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Clothes">Clothes</option>
+                <option value="Shoes">Shoes</option>
+                <option value="Accessories">Accessories</option>
+                <option value="Watches">Watches</option>
+                <option value="Home & Living">Home & Living</option>
+
+            </select>
+        </div>
+
+
+        <!-- Brand -->
+
+        <div class="form-group">
+            <label for="productBrand">Brand</label>
+
+            <input
+                type="text"
+                id="productBrand"
+                placeholder="Enter brand name"
+                required
+            >
+        </div>
+
+
+        <!-- Price -->
+
+        <div class="form-group">
+            <label for="productPrice">Price ($)</label>
+
+            <input
+                type="number"
+                id="productPrice"
+                min="0.01"
+                step="0.01"
+                placeholder="Enter price"
+                required
+            >
+        </div>
+
+
+        <!-- Stock -->
+
+        <div class="form-group">
+            <label for="productStock">Available Quantity</label>
+
+            <input
+                type="number"
+                id="productStock"
+                min="0"
+                step="1"
+                placeholder="Enter quantity"
+                required
+            >
+        </div>
+
+
+        <!-- Description -->
+
+        <div class="form-group">
+            <label for="productDescription">Description</label>
+
+            <textarea
+                id="productDescription"
+                placeholder="Enter product description"
+                rows="4"
+                required
+            ></textarea>
+        </div>
+
+
+        <!-- Buttons -->
+
+        <div class="form-actions">
+
+            <button type="submit" class="btn-primary">
+                Save Product
+            </button>
+
+            <button type="button" id="cancelProductBtn" class="btn-secondary">
+                Cancel
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <!-- Products Table -->
+
+    <div id="adminProductsContainer">
+
+        <!-- Products will appear here -->
+
+    </div>
+
+</div>
 
 
                     <!-- Manage Orders -->
