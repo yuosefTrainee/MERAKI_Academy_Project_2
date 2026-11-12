@@ -1,0 +1,352 @@
+/* =================================
+   SHOPORA - COMPONENTS
+================================= */
+
+
+/* ===== BUTTONS ===== */
+
+.btn-primary,
+.btn-secondary {
+    padding: 13px 25px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--primary-dark);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+
+
+/* ===== CATEGORY CARDS ===== */
+
+.category-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+}
+
+.category-card i {
+    font-size: 35px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.category-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+/* ===== PRODUCT CARDS ===== */
+
+.product-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.product-image {
+    width: 100%;
+    height: 230px;
+    position: relative;
+    overflow: hidden;
+    background-color: #eeeeee;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.06);
+}
+
+.product-info {
+    padding: 18px;
+}
+
+.product-info h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.product-category {
+    color: #888888;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.product-price {
+    color: var(--primary-color);
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.product-rating {
+    color: #e5a900;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.product-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.product-actions button {
+    flex: 1;
+}
+
+.favorite-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 6px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    font-size: 17px;
+}
+
+
+/* ===== STOCK BADGES ===== */
+
+.stock-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.in-stock {
+    background-color: #e4f5e8;
+    color: #23823b;
+}
+
+.low-stock {
+    background-color: #fff2d6;
+    color: #a36a00;
+}
+
+.sold-out {
+    background-color: #ffe2e2;
+    color: #c62828;
+}
+
+
+/* ===== SEARCH & FILTER ===== */
+
+.products-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 35px;
+}
+
+.products-toolbar input,
+.products-toolbar select {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: inherit;
+    outline: none;
+}
+
+.products-toolbar input {
+    flex: 1;
+}
+
+.products-toolbar input:focus,
+.products-toolbar select:focus {
+    border-color: var(--primary-color);
+}
+
+
+/* ===== INPUT FIELDS ===== */
+
+.auth-container {
+    max-width: 450px;
+    margin: 70px auto;
+    padding: 35px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: inherit;
+    outline: none;
+}
+
+.auth-container input:focus {
+    border-color: var(--primary-color);
+}
+
+.auth-container form button {
+    width: 100%;
+}
+
+.auth-container > p {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.auth-container > p button {
+    background: transparent;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+
+/* ===== ADMIN STATISTICS ===== */
+
+.stat-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.stat-card h3 {
+    font-size: 14px;
+    color: #888888;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+
+/* ===== TABLES ===== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: var(--card-bg);
+    font-size: 13px;
+}
+
+td {
+    font-size: 13px;
+}
+
+
+/* ===== EMPTY STATES ===== */
+
+.empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #888888;
+}
+
+.empty-state i {
+    font-size: 45px;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.empty-state h3 {
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+
+/* ===== MODALS ===== */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 550px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 12px;
+}
+
+.modal.hidden {
+    display: none;
+}

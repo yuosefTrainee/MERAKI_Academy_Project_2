@@ -1,0 +1,245 @@
+/* ==============================
+   SHOPORA - GLOBAL STYLES
+================================= */
+
+/* CSS Variables */
+
+:root {
+    --primary-color: #687c45;
+    --primary-dark: #526437;
+    --secondary-color: #e9eddf;
+
+    --bg-color: #ffffff;
+    --text-color: #222222;
+    --card-bg: #f8f9f5;
+    --border-color: #e5e5e5;
+
+    --font-family: 'Poppins', sans-serif;
+
+    --transition: all 0.3s ease;
+}
+
+
+/* Reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+
+/* General */
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+}
+
+ul {
+    list-style: none;
+}
+
+section {
+    width: 100%;
+}
+
+
+/* SPA Navigation */
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* Navbar */
+
+.header {
+    width: 100%;
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    max-width: 1400px;
+    margin: auto;
+    padding: 20px 5%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-color);
+}
+
+.logo span,
+.footer h2 span {
+    color: var(--primary-color);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-actions button {
+    background: transparent;
+    font-size: 15px;
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.nav-actions button:hover {
+    color: var(--primary-color);
+}
+
+
+/* Hero Section */
+
+.hero {
+    min-height: 550px;
+    padding: 80px 8%;
+
+    display: flex;
+    align-items: center;
+
+    background: linear-gradient(
+        120deg,
+        #edf1e5,
+        #ffffff
+    );
+}
+
+.hero-content {
+    max-width: 650px;
+}
+
+.hero-content > span {
+    color: var(--primary-color);
+    font-weight: 600;
+    letter-spacing: 2px;
+    font-size: 13px;
+}
+
+.hero-content h1 {
+    font-size: clamp(38px, 5vw, 65px);
+    line-height: 1.2;
+    margin: 20px 0;
+}
+
+.hero-content h1 span {
+    color: var(--primary-color);
+}
+
+.hero-content p {
+    color: #666666;
+    margin-bottom: 25px;
+    max-width: 500px;
+}
+
+
+/* Section Headers */
+
+.categories-section,
+.featured-section,
+#products {
+    padding: 80px 8%;
+}
+
+.section-header {
+    margin-bottom: 35px;
+}
+
+.section-header h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.section-header p {
+    color: #777777;
+}
+
+
+/* Products Grid */
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+
+/* Categories Grid */
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+
+/* Footer */
+
+.footer {
+    background-color: #1e2418;
+    color: #ffffff;
+    padding: 50px 8%;
+    text-align: center;
+}
+
+.footer h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.footer p {
+    color: #cccccc;
+    margin-top: 10px;
+}

@@ -1,0 +1,96 @@
+/* =================================
+   SHOPORA - DARK MODE
+================================= */
+
+[data-theme="dark"] {
+
+    --bg-color: #151515;
+    --text-color: #f5f5f5;
+    --card-bg: #222222;
+    --border-color: #383838;
+
+    --primary-color: #9caf72;
+    --primary-dark: #81965b;
+    --secondary-color: #303a27;
+
+}
+
+
+/* Body */
+
+[data-theme="dark"] body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+
+/* Navbar */
+
+[data-theme="dark"] .header {
+    background-color: #1c1c1c;
+    border-color: var(--border-color);
+}
+
+
+/* Hero */
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(
+        120deg,
+        #242b1e,
+        #151515
+    );
+}
+
+[data-theme="dark"] .hero-content p {
+    color: #cccccc;
+}
+
+
+/* Cards */
+
+[data-theme="dark"] .product-card,
+[data-theme="dark"] .category-card {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+
+/* Inputs */
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background-color: #252525;
+    color: #ffffff;
+    border-color: #444444;
+}
+
+
+/* Tables */
+
+[data-theme="dark"] th {
+    background-color: #292929;
+}
+
+[data-theme="dark"] td {
+    border-color: var(--border-color);
+}
+
+
+/* Footer */
+
+[data-theme="dark"] .footer {
+    background-color: #0d0d0d;
+}
+
+
+/* Buttons */
+
+[data-theme="dark"] .nav-actions button {
+    color: #ffffff;
+}
+
+[data-theme="dark"] .nav-actions button:hover {
+    color: var(--primary-color);
+}
