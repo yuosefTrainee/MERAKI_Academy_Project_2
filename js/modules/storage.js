@@ -1,10 +1,24 @@
-// Local Storage Management
+// =================================
+// SHOPORA - LOCAL STORAGE
+// =================================
 
 
 // Save Data
 export function saveData(key, data) {
 
-    localStorage.setItem(key, JSON.stringify(data));
+    try {
+
+        localStorage.setItem(key, JSON.stringify(data));
+
+        return true;
+
+    } catch (error) {
+
+        console.error("Error saving data:", error);
+
+        return false;
+
+    }
 
 }
 
@@ -19,11 +33,15 @@ export function getData(key, defaultValue = []) {
     }
 
     try {
+
         return JSON.parse(data);
+
     } catch (error) {
-        console.error(`Error reading ${key}:`, error);
+
+        console.error("Error reading data:", error);
 
         return defaultValue;
+
     }
 
 }
@@ -37,7 +55,7 @@ export function removeData(key) {
 }
 
 
-// Clear All Data
+// Clear Storage
 export function clearStorage() {
 
     localStorage.clear();
