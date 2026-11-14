@@ -1,753 +1,1072 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Shopora | Online Shopping</title>
+        <title>Shopora | Online Shopping</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
 
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/dark-mode.css">
-    <link rel="stylesheet" href="css/admin.css">
-    <link rel="stylesheet" href="css/responsive.css">
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/components.css">
+        <link rel="stylesheet" href="css/dark-mode.css">
+        <link rel="stylesheet" href="css/admin.css">
+        <link rel="stylesheet" href="css/responsive.css">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- JavaScript -->
-    <script type="module" src="js/script.js"></script>
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-</head>
+        <!-- SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<body>
+        <!-- JavaScript -->
+        <script type="module" src="js/script.js"></script>
 
-    <!-- ================= NAVBAR ================= -->
+    </head>
 
-    <header class="header">
+    <body>
 
-        <nav class="navbar">
+        <!-- ================= NAVBAR ================= -->
 
-            <a href="#" class="logo" data-page="home">
-                SHOPORA<span>.</span>
-            </a>
+        <header class="header">
 
-            <ul class="nav-links">
+            <nav class="navbar">
 
-                <li>
-                    <a href="#" data-page="home">Home</a>
-                </li>
+                <a href="#" class="logo" data-page="home">
+                    SHOPORA<span>.</span>
+                </a>
 
-                <li>
-                    <a href="#" data-page="products">Products</a>
-                </li>
+                <ul class="nav-links">
 
-                <li>
-                    <a href="#" data-page="favorites">Favorites</a>
-                </li>
+                    <li>
+                        <a href="#" data-page="home">Home</a>
+                    </li>
 
-                <li>
-                    <a href="#" data-page="about">About</a>
-                </li>
+                    <li>
+                        <a href="#" data-page="products">Products</a>
+                    </li>
 
-            </ul>
+                    <li>
+                        <a href="#" data-page="favorites">Favorites</a>
+                    </li>
 
-            <div class="nav-actions">
+                    <li>
+                        <a href="#" data-page="about">About</a>
+                    </li>
 
-                <button id="themeToggle" aria-label="Toggle theme">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
+                </ul>
 
-                <button data-page="cart" aria-label="Shopping cart">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="cartCount">0</span>
-                </button>
+                <div class="nav-actions">
 
-                <button data-page="login" id="authButton">
-                    Login
-                </button>
-
-            </div>
-
-        </nav>
-
-    </header>
-
-
-    <!-- ================= MAIN CONTENT ================= -->
-
-    <main id="app">
-
-
-        <!-- ================= HOME PAGE ================= -->
-
-        <section id="home" class="page active">
-
-            <!-- Hero Section -->
-
-            <section class="hero">
-
-                <div class="hero-content">
-
-                    <span>WELCOME TO SHOPORA</span>
-
-                    <h1>
-                        Discover Your
-                        <span>Perfect Style</span>
-                    </h1>
-
-                    <p>
-                        Explore our exclusive collection
-                        and discover products that match your lifestyle.
-                    </p>
-
-                    <button class="btn-primary" data-page="products">
-                        Shop Now
-                        <i class="fa-solid fa-arrow-right"></i>
+                    <button id="themeToggle" aria-label="Toggle theme">
+                        <i class="fa-solid fa-moon"></i>
                     </button>
 
-                </div>
-
-            </section>
-
-
-            <!-- Categories Section -->
-
-            <section class="categories-section">
-
-                <div class="section-header">
-
-                    <h2>Shop By Category</h2>
-
-                    <p>Explore our different categories</p>
-
-                </div>
-
-                <div id="categoriesContainer" class="categories-grid">
-
-                    <!-- Categories will be displayed using JavaScript -->
-
-                </div>
-
-            </section>
-
-
-            <!-- Featured Products -->
-
-            <section class="featured-section">
-
-                <div class="section-header">
-
-                    <h2>Featured Products</h2>
-
-                    <p>Discover our latest products</p>
-
-                </div>
-
-                <div id="featuredProductsContainer" class="products-grid">
-
-                    <!-- Products will be displayed using JavaScript -->
-
-                </div>
-
-                <button class="btn-secondary" data-page="products">
-                    View All Products
-                </button>
-
-            </section>
-
-        </section>
-
-
-        <!-- ================= PRODUCTS PAGE ================= -->
-
-        <section id="products" class="page hidden">
-
-            <div class="section-header">
-
-                <h2>Our Products</h2>
-
-                <p>Find your favorite products</p>
-
-            </div>
-
-            <div class="products-toolbar">
-
-                <input
-                    type="search"
-                    id="searchInput"
-                    placeholder="Search products..."
-                >
-
-                <select id="categoryFilter">
-                    <option value="all">All Categories</option>
-                </select>
-
-                <select id="sortProducts">
-                    <option value="default">Default</option>
-                    <option value="low-high">Price: Low to High</option>
-                    <option value="high-low">Price: High to Low</option>
-                </select>
-
-            </div>
-
-            <div id="productsContainer" class="products-grid">
-
-                <!-- Products will be displayed here -->
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= PRODUCT DETAILS ================= -->
-
-        <section id="productDetails" class="page hidden">
-
-            <div id="productDetailsContainer">
-
-                <!-- Product details will be displayed here -->
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= FAVORITES PAGE ================= -->
-
-        <section id="favorites" class="page hidden">
-
-            <div class="section-header">
-
-                <h2>My Favorites</h2>
-
-                <p>Your favorite products</p>
-
-            </div>
-
-            <div id="favoritesContainer" class="products-grid">
-
-                <!-- Favorite products -->
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= CART PAGE ================= -->
-
-        <section id="cart" class="page hidden">
-
-            <div class="section-header">
-
-                <h2>Shopping Cart</h2>
-
-                <p>Review your shopping cart</p>
-
-            </div>
-
-            <div id="cartContainer">
-
-                <!-- Cart products -->
-
-            </div>
-
-            <div id="cartSummary">
-
-                <!-- Total price -->
-
-            </div>
-
-            <button class="btn-primary" id="checkoutBtn">
-                Proceed to Checkout
-            </button>
-
-        </section>
-
-
-        <!-- ================= CHECKOUT PAGE ================= -->
-
-        <section id="checkout" class="page hidden">
-
-            <div class="section-header">
-
-                <h2>Checkout</h2>
-
-                <p>Complete your order</p>
-
-            </div>
-
-            <div id="checkoutContainer">
-
-                <!-- Checkout form -->
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= PAYMENT PAGE ================= -->
-
-        <section id="payment" class="page hidden">
-
-            <div class="section-header">
-
-                <h2>Online Payment</h2>
-
-                <p>Secure demo payment</p>
-
-            </div>
-
-            <div id="paymentContainer">
-
-                <!-- Fake payment form -->
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= PAYMENT RESULT ================= -->
-
-        <section id="paymentResult" class="page hidden">
-
-            <div id="paymentResultContainer">
-
-                <!-- Payment result -->
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= LOGIN PAGE ================= -->
-
-        <section id="login" class="page hidden">
-
-            <div class="auth-container">
-
-                <h2>Welcome Back</h2>
-
-                <form id="loginForm">
-
-                    <input
-                        type="email"
-                        id="loginEmail"
-                        placeholder="Email Address"
-                        required
-                    >
-
-                    <input
-                        type="password"
-                        id="loginPassword"
-                        placeholder="Password"
-                        required
-                    >
-
-                    <button type="submit" class="btn-primary">
+                    <button data-page="cart" aria-label="Shopping cart">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span id="cartCount">0</span>
+                    </button>
+
+                    <button data-page="login" id="authButton">
                         Login
                     </button>
 
-                </form>
+                </div>
+
+            </nav>
+
+        </header>
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main id="app">
+
+            <!-- ================= HOME PAGE ================= -->
+
+            <section id="home" class="page active">
+
+                <!-- Hero Section -->
+
+                <section class="hero">
+
+                    <div class="hero-content">
+
+                        <span>WELCOME TO SHOPORA</span>
+
+                        <h1>
+                            Discover Your
+                            <span>Perfect Style</span>
+                        </h1>
+
+                        <p>
+                            Explore our exclusive collection
+                            and discover products that match your lifestyle.
+                        </p>
+
+                        <button class="btn-primary" data-page="products">
+                            Shop Now
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </section>
+
+                <!-- Categories Section -->
+
+                <section class="categories-section">
+
+                    <div class="section-header">
+
+                        <h2>Shop By Category</h2>
+
+                        <p>Explore our different categories</p>
+
+                    </div>
+
+                    <div id="categoriesContainer" class="categories-grid">
+
+                        <!-- Categories will be displayed using JavaScript -->
+
+                    </div>
+
+                </section>
+
+                <!-- Featured Products -->
+
+                <section class="featured-section">
+
+                    <div class="section-header">
+
+                        <h2>Featured Products</h2>
+
+                        <p>Discover our latest products</p>
+
+                    </div>
+
+                    <div id="featuredProductsContainer" class="products-grid">
+
+                        <!-- Products will be displayed using JavaScript -->
+
+                    </div>
+
+                    <button class="btn-secondary" data-page="products">
+                        View All Products
+                    </button>
+
+                </section>
+
+            </section>
+
+            <!-- ================= PRODUCTS PAGE ================= -->
+
+            <section id="products" class="page hidden">
+
+                <div class="section-header">
+
+                    <h2>Our Products</h2>
+
+                    <p>Find your favorite products</p>
+
+                </div>
+
+                <div class="products-toolbar">
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search products...">
+
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                    </select>
+
+                    <select id="sortProducts">
+                        <option value="default">Default</option>
+                        <option value="low-high">Price: Low to High</option>
+                        <option value="high-low">Price: High to Low</option>
+                    </select>
+
+                </div>
+
+                <div id="productsContainer" class="products-grid">
+
+                    <!-- Products will be displayed here -->
+
+                </div>
+
+            </section>
+
+            <!-- ================= PRODUCT DETAILS ================= -->
+
+            <section id="productDetails" class="page hidden">
+
+                <div id="productDetailsContainer">
+
+                    <!-- Product details will be displayed here -->
+
+                </div>
+
+            </section>
+
+            <!-- ================= FAVORITES PAGE ================= -->
+
+            <section id="favorites" class="page hidden">
+
+                <div class="section-header">
+
+                    <h2>My Favorites</h2>
+
+                    <p>Your favorite products</p>
+
+                </div>
+
+                <div id="favoritesContainer" class="products-grid">
+
+                    <!-- Favorite products -->
+
+                </div>
+
+            </section>
+
+            <!-- ================= CART PAGE ================= -->
+
+            <section id="cart" class="page hidden">
+
+                <div class="section-header">
+
+                    <h2>Shopping Cart</h2>
+
+                    <p>Review your shopping cart</p>
+
+                </div>
+
+                <div id="cartContainer">
+
+                    <!-- Cart products -->
+
+                </div>
+
+                <div id="cartSummary">
+
+                    <!-- Total price -->
+
+                </div>
+
+                <button class="btn-primary" id="checkoutBtn">
+                    Proceed to Checkout
+                </button>
+
+            </section>
+
+            <!-- ================= CHECKOUT PAGE ================= -->
+
+            <section id="checkout" class="page hidden">
+
+                <div class="section-header">
+
+                    <h2>Checkout</h2>
+
+                    <p>Complete your order</p>
+
+                </div>
+
+                <div id="checkoutContainer">
+
+                    <!-- Checkout form -->
+
+                </div>
+
+            </section>
+
+            <!-- ================= PAYMENT PAGE ================= -->
+
+            <section id="payment" class="page hidden">
+
+                <div class="section-header">
+
+                    <h2>Online Payment</h2>
+
+                    <p>Secure demo payment</p>
+
+                </div>
+
+                <div id="paymentContainer">
+
+                    <!-- Fake payment form -->
+
+                </div>
+
+            </section>
+
+            <!-- ================= PAYMENT RESULT ================= -->
+
+            <section id="paymentResult" class="page hidden">
+
+                <div id="paymentResultContainer">
+
+                    <!-- Payment result -->
+
+                </div>
+
+            </section>
+
+            <!-- ================= LOGIN PAGE ================= -->
+
+            <section id="login" class="page hidden">
+
+                <div class="auth-container">
+
+                    <h2>Welcome Back</h2>
+
+                    <form id="loginForm">
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            placeholder="Email Address"
+                            required>
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Password"
+                            required>
+
+                        <div id="loginMessage"
+                            class="form-message hidden"></div>
+
+                        <button type="submit" class="btn-primary">
+                            Login
+                        </button>
+
+                    </form>
+
+                    <p>
+                        Don't have an account?
+
+                        <button data-page="register">
+                            Register
+                        </button>
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- ================= REGISTER PAGE ================= -->
+
+            <section id="register" class="page hidden">
+
+                <div class="auth-container">
+
+                    <h2>Create Account</h2>
+
+                    <form id="registerForm">
+
+                        <input
+                            type="text"
+                            id="registerName"
+                            placeholder="Full Name"
+                            required>
+
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            placeholder="Email Address"
+                            required>
+
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            placeholder="Password"
+                            required>
+
+                        <button type="submit" class="btn-primary">
+                            Create Account
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+            <!-- ================= MY ORDERS ================= -->
+
+            <section id="orders" class="page hidden">
+
+                <div class="section-header">
+
+                    <h2>My Orders</h2>
+
+                    <p>Track your previous orders</p>
+
+                </div>
+
+                <div id="ordersContainer">
+
+                    <!-- Customer orders -->
+
+                </div>
+
+            </section>
+
+            <!-- ================= ABOUT PAGE ================= -->
+
+            <section id="about" class="page hidden">
+
+                <div class="section-header">
+
+                    <h2>About Shopora</h2>
+
+                    <p>Your favorite online shopping destination.</p>
+
+                </div>
+
+            </section>
+
+            <!-- ================= PROFILE PAGE ================= -->
+
+            <section id="profile" class="page hidden">
+
+                <div class="section-header">
+
+                    <h2>My Profile</h2>
+
+                    <p>Manage your account information</p>
+
+                </div>
+
+                <div class="profile-container">
+
+                    <!-- Profile Header -->
+
+                    <div class="profile-header">
+
+                        <div class="profile-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+
+                        <div>
+                            <h3 id="profileName">User Name</h3>
+                            <p id="profileRole">Customer</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Profile Form -->
+
+                    <form id="profileForm">
+
+                        <!-- Full Name -->
+
+                        <div class="form-group">
+
+                            <label for="profileFullName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="profileFullName"
+                                placeholder="Enter your full name"
+                                required>
+
+                        </div>
+
+                        <!-- Email -->
+
+                        <div class="form-group">
+
+                            <label for="profileEmail">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="profileEmail"
+                                disabled>
+
+                        </div>
+
+                        <!-- New Password -->
+
+                        <div class="form-group">
+
+                            <label for="profilePassword">
+                                New Password
+                            </label>
+
+                            <input
+                                type="password"
+                                id="profilePassword"
+                                placeholder="Leave empty to keep current password">
+
+                        </div>
+
+                        <!-- Save Button -->
+
+                        <button type="submit" class="btn-primary">
+
+                            <i class="fa-solid fa-floppy-disk"></i>
+
+                            Save Changes
+
+                        </button>
+
+                        <!-- Profile Success / Error Message -->
+
+                        <div
+                            id="profileMessage"
+                            class="form-message hidden">
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+            <!-- ================= ADMIN DASHBOARD ================= -->
+
+            <section id="adminDashboard" class="page hidden">
+
+                <div class="admin-layout">
+
+                    <aside class="admin-sidebar">
+
+                        <h2>SHOPORA ADMIN</h2>
+
+                        <button data-admin-page="overview">
+                            <i class="fa-solid fa-chart-line"></i>
+                            Overview
+                        </button>
+
+                        <button data-admin-page="products">
+                            <i class="fa-solid fa-box"></i>
+                            Products
+                        </button>
+
+                        <button data-admin-page="orders">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Orders
+                        </button>
+
+                        <button data-admin-page="users">
+                            <i class="fa-solid fa-users"></i>
+                            Customers
+                        </button>
+
+                        <button data-admin-page="reviews">
+                            <i class="fa-solid fa-star"></i>
+                            Reviews
+                        </button>
+
+                        <button id="adminLogout">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            Logout
+                        </button>
+
+                    </aside>
+
+                    <div class="admin-content">
+
+                        <!-- ================= DASHBOARD OVERVIEW ================= -->
+
+                        <div id="adminOverview" class="admin-section">
+
+                            <div class="dashboard-header">
+
+                                <div>
+                                    <h2>Dashboard Overview</h2>
+                                    <p>Welcome back! Here's what's happening
+                                        with your store.</p>
+                                </div>
+
+                                <span class="dashboard-date"
+                                    id="dashboardDate"></span>
+
+                            </div>
+
+                            <!-- Statistics Cards -->
+
+                            <div id="dashboardStats" class="dashboard-stats">
+
+                                <div class="stat-card">
+
+                                    <div class="stat-icon">
+                                        <i class="fa-solid fa-dollar-sign"></i>
+                                    </div>
+
+                                    <div>
+                                        <p>Total Sales</p>
+                                        <h3 id="totalSales">$0.00</h3>
+                                    </div>
+
+                                </div>
+
+                                <div class="stat-card">
+
+                                    <div class="stat-icon">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </div>
+
+                                    <div>
+                                        <p>Total Orders</p>
+                                        <h3 id="totalOrders">0</h3>
+                                    </div>
+
+                                </div>
+
+                                <div class="stat-card">
+
+                                    <div class="stat-icon">
+                                        <i class="fa-solid fa-box"></i>
+                                    </div>
+
+                                    <div>
+                                        <p>Total Products</p>
+                                        <h3 id="totalProducts">0</h3>
+                                    </div>
+
+                                </div>
+
+                                <div class="stat-card">
+
+                                    <div class="stat-icon">
+                                        <i class="fa-solid fa-users"></i>
+                                    </div>
+
+                                    <div>
+                                        <p>Total Customers</p>
+                                        <h3 id="totalCustomers">0</h3>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Charts Section -->
+
+                            <div class="dashboard-charts">
+
+                                <div class="dashboard-chart-card">
+
+                                    <h3>Sales Overview</h3>
+
+                                    <canvas id="salesChart"></canvas>
+
+                                </div>
+
+                                <div class="dashboard-chart-card">
+
+                                    <h3>Orders Overview</h3>
+
+                                    <canvas id="ordersChart"></canvas>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Recent Orders -->
+
+                            <div class="dashboard-table-card">
+
+                                <h3>Recent Orders</h3>
+
+                                <div id="recentOrdersContainer">
+
+                                    <p class="empty-state">No orders available
+                                        yet.</p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- ================= MANAGE PRODUCTS ================= -->
+
+                        <div id="adminProducts" class="admin-section hidden">
+
+                            <h2>Manage Products</h2>
+
+                            <button id="addProductBtn" class="btn-primary">
+                                <i class="fa-solid fa-plus"></i>
+                                Add New Product
+                            </button>
+
+                            <!-- Products Search, Filters and Sorting -->
+
+                            <div class="admin-products-toolbar">
+
+                                <!-- Search -->
+
+                                <input
+                                    type="search"
+                                    id="adminProductSearch"
+                                    placeholder="Search products by name or brand...">
+
+                                <!-- Category Filter -->
+
+                                <select id="adminCategoryFilter">
+
+                                    <option value="all">All Categories</option>
+
+                                    <option value="Electronics">Electronics</option>
+
+                                    <option value="Clothes">Clothes</option>
+
+                                    <option value="Shoes">Shoes</option>
+
+                                    <option value="Accessories">Accessories</option>
+
+                                    <option value="Watches">Watches</option>
+
+                                    <option value="Home & Living">Home & Living</option>
+
+                                </select>
+
+                                <!-- Stock Filter -->
+
+                                <select id="adminStockFilter">
+
+                                    <option value="all">All Stock</option>
+
+                                    <option value="in-stock">In Stock</option>
+
+                                    <option value="low-stock">Low Stock</option>
+
+                                    <option value="sold-out">Sold Out</option>
+
+                                </select>
+
+                                <!-- Sorting -->
+
+                                <select id="adminSortFilter">
+
+                                    <option value="default">Default Sorting</option>
+
+                                    <option value="name-asc">Name: A to Z</option>
+
+                                    <option value="name-desc">Name: Z to A</option>
+
+                                    <option value="price-asc">Price: Low to High</option>
+
+                                    <option value="price-desc">Price: High to Low</option>
+
+                                    <option value="newest">Newest First</option>
+
+                                    <option value="oldest">Oldest First</option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- Add / Edit Product Form -->
+
+                            <form id="productForm" class="product-form hidden"
+                                novalidate>
+
+                                <h3>Add New Product</h3>
+
+                                <!-- Product Name -->
+
+                                <div class="form-group">
+
+                                    <label for="productName">
+                                        Product Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="productName"
+                                        placeholder="Enter product name">
+
+                                    <small
+                                        id="productNameError"
+                                        class="field-error"
+                                        aria-live="polite"></small>
+
+                                </div>
+
+                                <!-- Product Image -->
+
+                                <div class="form-group">
+
+                                    <label for="productImage">
+                                        Product Image
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        id="productImage"
+                                        accept="image/*">
+
+                                    <small
+                                        id="productImageError"
+                                        class="field-error"
+                                        aria-live="polite"></small>
+
+                                    <img
+                                        id="imagePreview"
+                                        class="image-preview hidden"
+                                        alt="Product Preview">
+
+                                </div>
+
+                                <!-- Category -->
+
+                                <div class="form-group">
+
+                                    <label for="productCategory">
+                                        Category
+                                    </label>
+
+                                    <select id="productCategory">
+
+                                        <option value>Select Category</option>
+
+                                        <option value="Electronics">
+                                            Electronics
+                                        </option>
+
+                                        <option value="Clothes">
+                                            Clothes
+                                        </option>
+
+                                        <option value="Shoes">
+                                            Shoes
+                                        </option>
+
+                                        <option value="Accessories">
+                                            Accessories
+                                        </option>
+
+                                        <option value="Watches">
+                                            Watches
+                                        </option>
+
+                                        <option value="Home & Living">
+                                            Home & Living
+                                        </option>
+
+                                    </select>
+
+                                    <small
+                                        id="productCategoryError"
+                                        class="field-error"
+                                        aria-live="polite"></small>
+
+                                </div>
+
+                                <!-- Brand -->
+
+                                <div class="form-group">
+
+                                    <label for="productBrand">
+                                        Brand
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="productBrand"
+                                        placeholder="Enter brand name">
+
+                                    <small
+                                        id="productBrandError"
+                                        class="field-error"
+                                        aria-live="polite"></small>
+
+                                </div>
+
+                                <!-- Price -->
+
+                                <div class="form-group">
+
+                                    <label for="productPrice">
+                                        Price ($)
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="productPrice"
+                                        min="0.01"
+                                        step="0.01"
+                                        placeholder="Enter price">
+
+                                    <small
+                                        id="productPriceError"
+                                        class="field-error"
+                                        aria-live="polite"></small>
+
+                                </div>
+
+                                <!-- Stock -->
+
+                                <div class="form-group">
+
+                                    <label for="productStock">
+                                        Available Quantity
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="productStock"
+                                        min="0"
+                                        step="1"
+                                        placeholder="Enter quantity">
+
+                                    <small
+                                        id="productStockError"
+                                        class="field-error"
+                                        aria-live="polite"></small>
+
+                                </div>
+
+                                <!-- Description -->
+
+                                <div class="form-group">
+
+                                    <label for="productDescription">
+                                        Description
+                                    </label>
+
+                                    <textarea
+                                        id="productDescription"
+                                        placeholder="Enter product description"
+                                        rows="4"></textarea>
+
+                                    <small
+                                        id="productDescriptionError"
+                                        class="field-error"
+                                        aria-live="polite"></small>
+
+                                </div>
+
+                                <!-- Buttons -->
+
+                                <div class="form-actions">
+
+                                    <button type="submit" class="btn-primary">
+                                        Save Product
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        id="cancelProductBtn"
+                                        class="btn-secondary">
+
+                                        Cancel
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                            <!-- Products Table -->
+
+                            <div id="adminProductsContainer">
+
+                                <!-- Products will appear here -->
+
+                            </div>
+
+                            <!-- Products Pagination -->
+
+                            <div id="adminPagination" class="admin-pagination"></div>
+
+                        </div>
+
+                        <!-- ================= MANAGE ORDERS ================= -->
+
+                        <div id="adminOrders" class="admin-section hidden">
+
+                            <h2>Manage Orders</h2>
+
+                            <div id="adminOrdersContainer">
+
+                                <!-- Orders table -->
+
+                            </div>
+
+                        </div>
+
+                        <!-- ================= MANAGE USERS ================= -->
+
+                        <div id="adminUsers" class="admin-section hidden">
+
+                            <h2>Manage Customers</h2>
+
+                            <div id="adminUsersContainer">
+
+                                <!-- Users table -->
+
+                            </div>
+
+                        </div>
+
+                        <!-- ================= MANAGE REVIEWS ================= -->
+
+                        <div id="adminReviews" class="admin-section hidden">
+
+                            <h2>Manage Reviews</h2>
+
+                            <div id="adminReviewsContainer">
+
+                                <!-- Reviews management -->
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+        <!-- ================= FOOTER ================= -->
+
+        <footer class="footer">
+
+            <div class="footer-content">
+
+                <h2>SHOPORA<span>.</span></h2>
 
                 <p>
-                    Don't have an account?
+                    Discover your style. Shop your way.
+                </p>
 
-                    <button data-page="register">
-                        Register
-                    </button>
+                <p>
+                    &copy; 2026 Shopora. All Rights Reserved.
                 </p>
 
             </div>
 
-        </section>
+        </footer>
 
-
-        <!-- ================= REGISTER PAGE ================= -->
-
-        <section id="register" class="page hidden">
-
-            <div class="auth-container">
-
-                <h2>Create Account</h2>
-
-                <form id="registerForm">
-
-                    <input
-                        type="text"
-                        id="registerName"
-                        placeholder="Full Name"
-                        required
-                    >
-
-                    <input
-                        type="email"
-                        id="registerEmail"
-                        placeholder="Email Address"
-                        required
-                    >
-
-                    <input
-                        type="password"
-                        id="registerPassword"
-                        placeholder="Password"
-                        required
-                    >
-
-                    <button type="submit" class="btn-primary">
-                        Create Account
-                    </button>
-
-                </form>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= MY ORDERS ================= -->
-
-        <section id="orders" class="page hidden">
-
-            <div class="section-header">
-
-                <h2>My Orders</h2>
-
-                <p>Track your previous orders</p>
-
-            </div>
-
-            <div id="ordersContainer">
-
-                <!-- Customer orders -->
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= ABOUT PAGE ================= -->
-
-        <section id="about" class="page hidden">
-
-            <div class="section-header">
-
-                <h2>About Shopora</h2>
-
-                <p>Your favorite online shopping destination.</p>
-
-            </div>
-
-        </section>
-
-
-        <!-- ================= ADMIN DASHBOARD ================= -->
-
-        <section id="adminDashboard" class="page hidden">
-
-            <div class="admin-layout">
-
-                <aside class="admin-sidebar">
-
-                    <h2>SHOPORA ADMIN</h2>
-
-                    <button data-admin-page="overview">
-                        <i class="fa-solid fa-chart-line"></i>
-                        Overview
-                    </button>
-
-                    <button data-admin-page="products">
-                        <i class="fa-solid fa-box"></i>
-                        Products
-                    </button>
-
-                    <button data-admin-page="orders">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Orders
-                    </button>
-
-                    <button data-admin-page="users">
-                        <i class="fa-solid fa-users"></i>
-                        Customers
-                    </button>
-
-                    <button data-admin-page="reviews">
-                        <i class="fa-solid fa-star"></i>
-                        Reviews
-                    </button>
-
-                    <button id="adminLogout">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        Logout
-                    </button>
-
-                </aside>
-
-
-                <div class="admin-content">
-
-                    <!-- Overview -->
-
-                    <div id="adminOverview" class="admin-section">
-
-                        <h2>Dashboard Overview</h2>
-
-                        <div id="dashboardStats">
-
-                            <!-- Statistics -->
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Manage Products -->
-
-                  <div id="adminProducts" class="admin-section hidden">
-
-    <h2>Manage Products</h2>
-
-    <button id="addProductBtn" class="btn-primary">
-        <i class="fa-solid fa-plus"></i>
-        Add New Product
-    </button>
-
-
-    <!-- Add Product Form -->
-
-    <form id="productForm" class="product-form hidden">
-
-        <h3>Add New Product</h3>
-
-        <!-- Product Name -->
-
-        <div class="form-group">
-            <label for="productName">Product Name</label>
-
-            <input
-                type="text"
-                id="productName"
-                placeholder="Enter product name"
-                required
-            >
-        </div>
-
-
-        <!-- Product Image -->
-
-        <div class="form-group">
-            <label for="productImage">Product Image</label>
-
-            <input
-                type="file"
-                id="productImage"
-                accept="image/*"
-                required
-            >
-
-            <img
-                id="imagePreview"
-                class="image-preview hidden"
-                alt="Product Preview"
-            >
-        </div>
-
-
-        <!-- Category -->
-
-        <div class="form-group">
-            <label for="productCategory">Category</label>
-
-            <select id="productCategory" required>
-
-                <option value="">Select Category</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Clothes">Clothes</option>
-                <option value="Shoes">Shoes</option>
-                <option value="Accessories">Accessories</option>
-                <option value="Watches">Watches</option>
-                <option value="Home & Living">Home & Living</option>
-
-            </select>
-        </div>
-
-
-        <!-- Brand -->
-
-        <div class="form-group">
-            <label for="productBrand">Brand</label>
-
-            <input
-                type="text"
-                id="productBrand"
-                placeholder="Enter brand name"
-                required
-            >
-        </div>
-
-
-        <!-- Price -->
-
-        <div class="form-group">
-            <label for="productPrice">Price ($)</label>
-
-            <input
-                type="number"
-                id="productPrice"
-                min="0.01"
-                step="0.01"
-                placeholder="Enter price"
-                required
-            >
-        </div>
-
-
-        <!-- Stock -->
-
-        <div class="form-group">
-            <label for="productStock">Available Quantity</label>
-
-            <input
-                type="number"
-                id="productStock"
-                min="0"
-                step="1"
-                placeholder="Enter quantity"
-                required
-            >
-        </div>
-
-
-        <!-- Description -->
-
-        <div class="form-group">
-            <label for="productDescription">Description</label>
-
-            <textarea
-                id="productDescription"
-                placeholder="Enter product description"
-                rows="4"
-                required
-            ></textarea>
-        </div>
-
-
-        <!-- Buttons -->
-
-        <div class="form-actions">
-
-            <button type="submit" class="btn-primary">
-                Save Product
-            </button>
-
-            <button type="button" id="cancelProductBtn" class="btn-secondary">
-                Cancel
-            </button>
-
-        </div>
-
-    </form>
-
-
-    <!-- Products Table -->
-
-    <div id="adminProductsContainer">
-
-        <!-- Products will appear here -->
-
-    </div>
-
-</div>
-
-
-                    <!-- Manage Orders -->
-
-                    <div id="adminOrders" class="admin-section hidden">
-
-                        <h2>Manage Orders</h2>
-
-                        <div id="adminOrdersContainer">
-
-                            <!-- Orders table -->
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Manage Users -->
-
-                    <div id="adminUsers" class="admin-section hidden">
-
-                        <h2>Manage Customers</h2>
-
-                        <div id="adminUsersContainer">
-
-                            <!-- Users table -->
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Manage Reviews -->
-
-                    <div id="adminReviews" class="admin-section hidden">
-
-                        <h2>Manage Reviews</h2>
-
-                        <div id="adminReviewsContainer">
-
-                            <!-- Reviews management -->
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-    </main>
-
-
-    <!-- ================= FOOTER ================= -->
-
-    <footer class="footer">
-
-        <div class="footer-content">
-
-            <h2>SHOPORA<span>.</span></h2>
-
-            <p>
-                Discover your style. Shop your way.
-            </p>
-
-            <p>
-                &copy; 2026 Shopora. All Rights Reserved.
-            </p>
-
-        </div>
-
-    </footer>
-
-
-</body>
+    </body>
 
 </html>

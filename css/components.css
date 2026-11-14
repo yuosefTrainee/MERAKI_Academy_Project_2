@@ -419,3 +419,226 @@ td {
     gap: 12px;
     margin-top: 25px;
 }
+
+/* Profile */
+
+.profile-container {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 30px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: var(--primary-color);
+}
+
+.profile-header h3 {
+    margin-bottom: 5px;
+}
+
+.profile-header p {
+    color: var(--primary-color);
+}
+
+#profileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+/* Login Error Message */
+
+.form-message {
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.form-message.hidden {
+    display: none;
+}
+/* Profile Messages */
+
+.form-message {
+    padding: 12px 15px;
+    margin-top: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.form-message.error {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.form-message.success {
+    background-color: #dcfce7;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+/* ================= FIELD VALIDATION ================= */
+
+/* Error message under each input */
+
+.field-error {
+    display: block;
+    min-height: 18px;
+    margin-top: 6px;
+    color: #dc2626;
+    font-size: 13px;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+/* Input border when validation fails */
+
+.input-error {
+    border: 1px solid #dc2626 !important;
+}
+
+/* Input focus when validation fails */
+
+.input-error:focus {
+    outline: 1px solid #dc2626;
+    outline-offset: 1px;
+}
+
+/* Product image preview */
+
+.image-preview {
+    display: block;
+    max-width: 180px;
+    max-height: 180px;
+    margin-top: 12px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Hide elements */
+
+.hidden {
+    display: none !important;
+}
+
+/* Admin Product Image */
+
+.admin-product-image {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+/* ================= ADMIN PRODUCTS TOOLBAR ================= */
+
+.admin-products-toolbar {
+    display: flex;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.admin-products-toolbar input,
+.admin-products-toolbar select {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    background: white;
+}
+
+.admin-products-toolbar input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.admin-products-toolbar select {
+    min-width: 160px;
+}
+
+.admin-products-toolbar input:focus,
+.admin-products-toolbar select:focus {
+    border-color: #687c45;
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    .admin-products-toolbar {
+        flex-direction: column;
+    }
+
+    .admin-products-toolbar input,
+    .admin-products-toolbar select {
+        width: 100%;
+    }
+
+}
+.admin-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.pagination-numbers {
+    display: flex;
+    gap: 6px;
+}
+
+.pagination-btn,
+.pagination-number {
+    padding: 9px 13px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    background: white;
+    color: #333;
+    cursor: pointer;
+    font-family: inherit;
+    transition: 0.3s ease;
+}
+
+.pagination-number.active {
+    background: #687c45;
+    color: white;
+    border-color: #687c45;
+}
+
+.pagination-btn:hover:not(:disabled),
+.pagination-number:hover {
+    background: #687c45;
+    color: white;
+    border-color: #687c45;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
