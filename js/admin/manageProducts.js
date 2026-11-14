@@ -6,6 +6,8 @@ import {
     deleteProduct
 } from "../modules/products.js";
 
+import { isAdmin } from "../modules/auth.js";
+
 import {
     getImage,
     deleteImage
@@ -327,19 +329,43 @@ function renderPagination(totalPages) {
 
 export async function renderAdminProducts() {
 
+    const container = $("#adminProductsContainer");
+    const pagination = $("#adminPagination");
+
+    // Only the administrator can access product management.
+
+    if (!isAdmin()) {
+
+        container.empty().html(`
+            <div class="empty-state">
+
+                <i class="fa-solid fa-lock"></i>
+
+                <h3>Access Denied</h3>
+
+                <p>Only the administrator can manage products.</p>
+
+            </div>
+        `);
+
+        pagination.empty();
+
+        return;
+
+    }
+
+
     const products = getProducts();
+
 
     // Apply Filters
 
     const filteredProducts = filterProducts(products);
 
+
     // Apply Sorting
 
     const sortedProducts = sortProducts(filteredProducts);
-
-    const container = $("#adminProductsContainer");
-
-    const pagination = $("#adminPagination");
 
 
     // Clean Previous Image URLs
@@ -643,6 +669,27 @@ export async function renderAdminProducts() {
 
     container.find(".btn-delete").on("click", async function () {
 
+        // Recheck permission at the moment the action is performed.
+
+        if (!isAdmin()) {
+
+            await Swal.fire({
+
+                icon: "error",
+
+                title: "Access Denied",
+
+                text: "Only the administrator can delete products.",
+
+                confirmButtonColor: "#687c45"
+
+            });
+
+            return;
+
+        }
+
+
         const productId = $(this).attr("data-id");
 
 
@@ -747,6 +794,13 @@ export async function renderAdminProducts() {
 // ================= INITIALIZE FILTERS AND SORTING =================
 
 export function initializeProductFilters() {
+
+    if (!isAdmin()) {
+
+        return;
+
+    }
+
 
     // Search
 

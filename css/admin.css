@@ -363,3 +363,694 @@ body:has(#adminDashboard.active) .footer {
     font-size: 15px;
     color: #777;
 }
+
+/* =====================================
+   SHOPORA - ADMIN ORDERS
+===================================== */
+
+/* Orders Toolbar */
+
+.admin-orders-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.admin-orders-toolbar input,
+.admin-orders-toolbar select {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    background: #fff;
+    color: #333;
+    transition: 0.3s ease;
+}
+
+.admin-orders-toolbar input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.admin-orders-toolbar select {
+    min-width: 160px;
+    cursor: pointer;
+}
+
+.admin-orders-toolbar input:focus,
+.admin-orders-toolbar select:focus {
+    border-color: #687c45;
+    box-shadow: 0 0 0 3px rgba(104, 124, 69, 0.12);
+}
+
+
+/* Orders Table Container */
+
+#ordersTableContainer {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 12px;
+}
+
+
+/* Orders Table */
+
+#ordersTableContainer .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+#ordersTableContainer .admin-table th {
+    background: #f3f5ef;
+    color: #333;
+    padding: 16px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+#ordersTableContainer .admin-table td {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    font-size: 14px;
+}
+
+#ordersTableContainer .admin-table tbody tr {
+    transition: 0.2s ease;
+}
+
+#ordersTableContainer .admin-table tbody tr:hover {
+    background: #f9faf6;
+}
+
+
+/* Order Status */
+
+.order-status {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.order-status.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.order-status.processing {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.order-status.shipped {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+.order-status.delivered {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.order-status.cancelled {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+
+/* Order Action Buttons */
+
+.order-action-btn {
+    padding: 8px 12px;
+    margin: 2px;
+    border: none;
+    border-radius: 6px;
+    background: #687c45;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.order-action-btn:hover {
+    background: #526438;
+    transform: translateY(-2px);
+}
+
+
+/* Orders Pagination */
+
+#ordersPagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 25px;
+}
+
+.order-page-btn {
+    width: 38px;
+    height: 38px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.order-page-btn:hover,
+.order-page-btn.active {
+    background: #687c45;
+    border-color: #687c45;
+    color: #fff;
+}
+
+
+/* Empty Orders State */
+
+.orders-empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    background: #fff;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.orders-empty-state h3 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.orders-empty-state p {
+    color: #888;
+    font-size: 15px;
+}
+
+
+/* Order Details */
+
+.order-details {
+    text-align: left;
+    line-height: 1.8;
+}
+
+.order-details p {
+    margin: 8px 0;
+}
+
+.order-details h3 {
+    margin: 15px 0;
+    color: #687c45;
+}
+
+.order-details hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .admin-orders-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-orders-toolbar input,
+    .admin-orders-toolbar select {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    #ordersTableContainer {
+        overflow-x: auto;
+    }
+
+    .order-action-btn {
+        margin-bottom: 5px;
+    }
+
+}
+/* =====================================
+   SHOPORA - ADMIN CUSTOMERS
+===================================== */
+
+.admin-users-toolbar {
+    display: flex;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.admin-users-toolbar input,
+.admin-users-toolbar select {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    background: white;
+    color: #333;
+    transition: 0.3s ease;
+}
+
+.admin-users-toolbar input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.admin-users-toolbar select {
+    min-width: 180px;
+    cursor: pointer;
+}
+
+.admin-users-toolbar input:focus,
+.admin-users-toolbar select:focus {
+    border-color: #687c45;
+    box-shadow: 0 0 0 3px rgba(104, 124, 69, 0.12);
+}
+
+
+/* Customers Table */
+
+#customersTableContainer {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+    background: white;
+    border-radius: 12px;
+}
+
+#customersTableContainer .admin-table {
+    width: 100%;
+    min-width: 750px;
+    border-collapse: collapse;
+}
+
+#customersTableContainer .admin-table th {
+    background: #f3f5ef;
+    color: #333;
+    padding: 16px;
+    text-align: left;
+    font-size: 14px;
+}
+
+#customersTableContainer .admin-table td {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    font-size: 14px;
+}
+
+#customersTableContainer .admin-table tbody tr:hover {
+    background: #f9faf6;
+}
+
+
+/* Customer Name */
+
+.customer-name {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    color: #333;
+}
+
+.customer-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #e8eddf;
+    color: #687c45;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+
+/* Customer Orders */
+
+.customer-orders-count {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #f0f3e9;
+    color: #687c45;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+
+/* Customer Role */
+
+.customer-role {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #e8eddf;
+    color: #526438;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* Customer Action Buttons */
+
+.customer-action-btn {
+    padding: 8px 12px;
+    margin: 2px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.details-btn {
+    background: #687c45;
+}
+
+.details-btn:hover {
+    background: #526438;
+}
+
+.delete-btn {
+    background: #dc3545;
+}
+
+.delete-btn:hover {
+    background: #b02a37;
+}
+
+
+/* Pagination */
+
+#customersPagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 25px;
+}
+
+.customer-page-btn {
+    width: 38px;
+    height: 38px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.customer-page-btn:hover,
+.customer-page-btn.active {
+    background: #687c45;
+    border-color: #687c45;
+    color: white;
+}
+
+
+/* Empty State */
+
+.customers-empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.customers-empty-state h3 {
+    color: #333;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.customers-empty-state p {
+    color: #888;
+    font-size: 15px;
+}
+
+
+/* Customer Details */
+
+.customer-details {
+    text-align: left;
+    line-height: 1.8;
+}
+
+.customer-details p {
+    margin: 10px 0;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .admin-users-toolbar {
+        flex-direction: column;
+    }
+
+    .admin-users-toolbar input,
+    .admin-users-toolbar select {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    #customersTableContainer {
+        overflow-x: auto;
+    }
+
+}
+/* =====================================
+   SHOPORA - ADMIN REVIEWS
+===================================== */
+
+.admin-reviews-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.admin-reviews-toolbar input,
+.admin-reviews-toolbar select {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    background: white;
+    color: #333;
+    transition: 0.3s ease;
+}
+
+.admin-reviews-toolbar input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.admin-reviews-toolbar select {
+    min-width: 160px;
+    cursor: pointer;
+}
+
+.admin-reviews-toolbar input:focus,
+.admin-reviews-toolbar select:focus {
+    border-color: #687c45;
+    box-shadow: 0 0 0 3px rgba(104, 124, 69, 0.12);
+}
+
+
+/* Reviews Table */
+
+#reviewsTableContainer {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 20px;
+    background: white;
+    border-radius: 12px;
+}
+
+#reviewsTableContainer .admin-table {
+    width: 100%;
+    min-width: 850px;
+    border-collapse: collapse;
+}
+
+#reviewsTableContainer .admin-table th {
+    background: #f3f5ef;
+    color: #333;
+    padding: 16px;
+    text-align: left;
+    font-size: 14px;
+}
+
+#reviewsTableContainer .admin-table td {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    font-size: 14px;
+}
+
+#reviewsTableContainer .admin-table tbody tr:hover {
+    background: #f9faf6;
+}
+
+
+/* Review Stars */
+
+.review-stars {
+    color: #e6a817;
+    font-size: 17px;
+    letter-spacing: 2px;
+    white-space: nowrap;
+}
+
+
+/* Review Comment */
+
+.review-comment-cell {
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* Review Buttons */
+
+.review-action-btn {
+    padding: 8px 12px;
+    margin: 2px;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.review-action-btn.details-btn {
+    background: #687c45;
+}
+
+.review-action-btn.details-btn:hover {
+    background: #526438;
+}
+
+.review-action-btn.delete-btn {
+    background: #dc3545;
+}
+
+.review-action-btn.delete-btn:hover {
+    background: #b02a37;
+}
+
+
+/* Pagination */
+
+#reviewsPagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 25px;
+}
+
+.review-page-btn {
+    width: 38px;
+    height: 38px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.review-page-btn:hover,
+.review-page-btn.active {
+    background: #687c45;
+    border-color: #687c45;
+    color: white;
+}
+
+
+/* Empty State */
+
+.reviews-empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.reviews-empty-state h3 {
+    color: #333;
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.reviews-empty-state p {
+    color: #888;
+    font-size: 15px;
+}
+
+
+/* Review Details */
+
+.review-details {
+    text-align: left;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.review-details p {
+    margin: 10px 0;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .admin-reviews-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-reviews-toolbar input,
+    .admin-reviews-toolbar select {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    #reviewsTableContainer {
+        overflow-x: auto;
+    }
+
+}

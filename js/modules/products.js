@@ -9,8 +9,13 @@ import {
     createProduct
 } from "../data/products.js";
 
+import { isAdmin } from "./auth.js";
 
+
+// =================================
 // Initialize Products
+// =================================
+
 export function initializeProducts() {
 
     const products = getData("products", null);
@@ -24,7 +29,10 @@ export function initializeProducts() {
 }
 
 
+// =================================
 // Get All Products
+// =================================
+
 export function getProducts() {
 
     return getData("products", []);
@@ -32,8 +40,22 @@ export function getProducts() {
 }
 
 
+// =================================
 // Add New Product
+// =================================
+
 export function addProduct(productData) {
+
+    // Check Admin Permission
+
+    if (!isAdmin()) {
+
+        console.error("Access denied: Admin permission required.");
+
+        return false;
+
+    }
+
 
     const products = getProducts();
 
@@ -44,7 +66,9 @@ export function addProduct(productData) {
     const saved = saveData("products", products);
 
     if (!saved) {
+
         return false;
+
     }
 
     return newProduct;
@@ -52,22 +76,44 @@ export function addProduct(productData) {
 }
 
 
+// =================================
 // Update Product
+// =================================
+
 export function updateProduct(productId, updatedData) {
+
+    // Check Admin Permission
+
+    if (!isAdmin()) {
+
+        console.error("Access denied: Admin permission required.");
+
+        return false;
+
+    }
+
 
     const products = getProducts();
 
     const productIndex = products.findIndex(
-        product => product.id === productId
+
+        product => String(product.id) === String(productId)
+
     );
 
     if (productIndex === -1) {
+
         return false;
+
     }
 
+
     products[productIndex] = {
+
         ...products[productIndex],
+
         ...updatedData
+
     };
 
     return saveData("products", products);
@@ -75,17 +121,35 @@ export function updateProduct(productId, updatedData) {
 }
 
 
+// =================================
 // Delete Product
+// =================================
+
 export function deleteProduct(productId) {
+
+    // Check Admin Permission
+
+    if (!isAdmin()) {
+
+        console.error("Access denied: Admin permission required.");
+
+        return false;
+
+    }
+
 
     const products = getProducts();
 
     const updatedProducts = products.filter(
-        product => product.id !== productId
+
+        product => String(product.id) !== String(productId)
+
     );
 
     if (updatedProducts.length === products.length) {
+
         return false;
+
     }
 
     return saveData("products", updatedProducts);

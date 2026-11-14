@@ -15,6 +15,12 @@ import {
     initializeProductFilters
 } from "./admin/manageProducts.js";
 
+import { renderAdminOrders } from "./admin/manageOrders.js";
+
+import { renderAdminUsers } from "./admin/manageUsers.js";
+
+import { renderAdminReviews } from "./admin/manageReviews.js";
+
 import {
     initializeUsers,
     registerCustomer,
@@ -78,11 +84,30 @@ function updateNavbar() {
 
     const user = getCurrentUser();
 
+    // Remove Previous Customer Logout Button
+
+    $("#customerLogout").remove();
+
+
     if (user) {
 
         $("#authButton")
             .text(user.name)
             .attr("data-page", "profile");
+
+
+        // Show Logout Button For Customers Only
+
+        if (user.role === "customer") {
+
+            $("#authButton").after(`
+                <button id="customerLogout" class="customer-logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </button>
+            `);
+
+        }
 
     } else {
 
@@ -110,11 +135,12 @@ function restoreUserSession() {
         updateNavbar();
 
         return;
+
     }
 
     updateNavbar();
 
-    if (user.role === "admin") {
+    if (user.role === "admin" && isAdmin()) {
 
         showPage("adminDashboard");
 
@@ -236,7 +262,7 @@ function handleAdminNavigation() {
             $(selectedSection).removeClass("hidden");
 
 
-            // Load Dashboard Data
+            // Load Dashboard
 
             if (page === "overview") {
 
@@ -250,6 +276,33 @@ function handleAdminNavigation() {
             if (page === "products") {
 
                 renderAdminProducts();
+
+            }
+
+
+            // Load Orders
+
+            if (page === "orders") {
+
+                renderAdminOrders();
+
+            }
+
+
+            // Load Customers
+
+            if (page === "users") {
+
+                renderAdminUsers();
+
+            }
+
+
+            // Load Reviews
+
+            if (page === "reviews") {
+
+                renderAdminReviews();
 
             }
 
@@ -325,7 +378,7 @@ function handleLogin() {
         if (!result.success) {
 
             $("#loginMessage")
-                .text("Invalid email or password!")
+                .text(result.message)
                 .removeClass("hidden");
 
             return;
@@ -492,6 +545,8 @@ function showProfileMessage(message, type) {
 
 function handleLogout() {
 
+    // Admin Logout
+
     $("#adminLogout").on("click", function () {
 
         if (!isAdmin()) {
@@ -500,6 +555,26 @@ function handleLogout() {
 
         }
 
+        logoutUser();
+
+        updateNavbar();
+
+        showPage("home");
+
+    });
+
+
+    // Customer Logout
+
+    $(document).on("click", "#customerLogout", function () {
+
+        const user = getCurrentUser();
+
+        if (!user || user.role !== "customer") {
+
+            return;
+
+        }
 
         logoutUser();
 

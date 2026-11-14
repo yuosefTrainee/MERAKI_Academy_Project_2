@@ -243,3 +243,46 @@ section {
     color: #cccccc;
     margin-top: 10px;
 }
+/* Customer Logout Button */
+
+.customer-logout-btn {
+    padding: 10px 16px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 7px;
+    background: #687c45;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 1;
+}
+
+/* Hover Effect */
+
+.customer-logout-btn:hover {
+    background: #45552f !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.customer-logout-btn i {
+    margin-right: 5px;
+    color: #ffffff;
+}
+
+.customer-logout-btn:hover i {
+    color: #ffffff;
+}
+@media (max-width: 768px) {
+
+    .customer-logout-btn {
+        padding: 7px 10px;
+        font-size: 12px;
+    }
+
+}

@@ -1,5 +1,5 @@
 // =====================================
-// Import Modules
+// SHOPORA - AUTHENTICATION
 // =====================================
 
 import { saveData, getData } from "./storage.js";
@@ -14,7 +14,6 @@ export function initializeUsers() {
 
     const users = getData("users", null);
 
-    // Create initial users if storage is empty
     if (users === null) {
 
         const allUsers = [adminAccount, ...initialUsers];
@@ -34,7 +33,6 @@ export function registerCustomer(name, email, password) {
 
     const users = getData("users", []);
 
-    // Validate input
     name = name.trim();
     email = email.trim().toLowerCase();
 
@@ -56,7 +54,6 @@ export function registerCustomer(name, email, password) {
 
     }
 
-    // Check if email already exists
     const existingUser = users.find(
         user => user.email.toLowerCase() === email
     );
@@ -70,7 +67,6 @@ export function registerCustomer(name, email, password) {
 
     }
 
-    // Create new customer
     const newUser = {
 
         id: crypto.randomUUID(),
@@ -121,7 +117,6 @@ export function loginUser(email, password) {
 
     email = email.trim().toLowerCase();
 
-    // Find user
     const user = users.find(
 
         user =>
@@ -142,7 +137,6 @@ export function loginUser(email, password) {
 
     }
 
-    // Create current session
     const currentUser = {
 
         id: user.id,
@@ -155,7 +149,6 @@ export function loginUser(email, password) {
 
     };
 
-    // Save current user
     const saved = saveData("currentUser", currentUser);
 
     if (!saved) {
@@ -200,7 +193,22 @@ export function getCurrentUser() {
 
 export function isLoggedIn() {
 
-    return getCurrentUser() !== null;
+    const user = getCurrentUser();
+
+    if (!user || !user.id) {
+
+        return false;
+
+    }
+
+    const users = getData("users", []);
+
+    return users.some(storedUser =>
+
+        String(storedUser.id) === String(user.id) &&
+        storedUser.email === user.email
+
+    );
 
 }
 
@@ -211,9 +219,26 @@ export function isLoggedIn() {
 
 export function isAdmin() {
 
-    const user = getCurrentUser();
+    const currentUser = getCurrentUser();
 
-    return user !== null && user.role === "admin";
+    if (!currentUser || !currentUser.id) {
+
+        return false;
+
+    }
+
+    const users = getData("users", []);
+
+    const storedUser = users.find(user =>
+
+        String(user.id) === String(currentUser.id) &&
+        user.email === currentUser.email
+
+    );
+
+    return storedUser !== undefined &&
+           storedUser.role === "admin" &&
+           currentUser.role === "admin";
 
 }
 
@@ -237,7 +262,7 @@ export function updateUserProfile(name, newPassword = "") {
 
     const currentUser = getCurrentUser();
 
-    if (!currentUser) {
+    if (!isLoggedIn()) {
 
         return false;
 
@@ -253,10 +278,9 @@ export function updateUserProfile(name, newPassword = "") {
 
     const users = getData("users", []);
 
-    // Find current user by ID
     const userIndex = users.findIndex(
 
-        user => user.id === currentUser.id
+        user => String(user.id) === String(currentUser.id)
 
     );
 
@@ -266,10 +290,8 @@ export function updateUserProfile(name, newPassword = "") {
 
     }
 
-    // Update name
     users[userIndex].name = name;
 
-    // Update password only if provided
     if (newPassword.trim() !== "") {
 
         if (newPassword.length < 6) {
@@ -282,7 +304,6 @@ export function updateUserProfile(name, newPassword = "") {
 
     }
 
-    // Save updated users
     const saved = saveData("users", users);
 
     if (!saved) {
@@ -291,7 +312,6 @@ export function updateUserProfile(name, newPassword = "") {
 
     }
 
-    // Update current session
     currentUser.name = name;
 
     const sessionSaved = saveData("currentUser", currentUser);

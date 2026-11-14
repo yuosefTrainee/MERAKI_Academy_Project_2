@@ -15,6 +15,8 @@ import {
     renderAdminProducts
 } from "../admin/manageProducts.js";
 
+import { isAdmin } from "./auth.js";
+
 
 // ================= VARIABLES =================
 
@@ -34,9 +36,35 @@ const productImage = document.getElementById("productImage");
 const imagePreview = document.getElementById("imagePreview");
 
 
+// ================= CHECK ADMIN =================
+
+function checkAdminPermission() {
+
+    if (!isAdmin()) {
+
+        console.warn("Access denied: Admin permission required.");
+
+        Swal.fire({
+            icon: "error",
+            title: "Access Denied",
+            text: "Only administrators can manage products.",
+            confirmButtonColor: "#687c45"
+        });
+
+        return false;
+
+    }
+
+    return true;
+
+}
+
+
 // ================= OPEN FORM =================
 
 function openProductForm() {
+
+    if (!checkAdminPermission()) return;
 
     productForm.classList.remove("hidden");
 
@@ -285,6 +313,8 @@ function validateProductForm(data) {
 
 function previewProductImage() {
 
+    if (!isAdmin()) return;
+
     const file = productImage.files[0];
 
     clearFieldError("productImage");
@@ -324,6 +354,11 @@ function previewProductImage() {
 // ================= EDIT PRODUCT =================
 
 function editProduct(productId) {
+
+    // Check Admin Permission
+
+    if (!checkAdminPermission()) return;
+
 
     const products = getProducts();
 
@@ -367,7 +402,7 @@ function editProduct(productId) {
     productImage.value = "";
 
 
-    // Show Existing Image Placeholder
+    // Hide Image Preview
 
     imagePreview.classList.add("hidden");
 
@@ -393,6 +428,17 @@ function editProduct(productId) {
 async function handleProductSubmit(event) {
 
     event.preventDefault();
+
+
+    // Check Admin Permission
+
+    if (!checkAdminPermission()) {
+
+        closeProductForm();
+
+        return;
+
+    }
 
 
     // Get Form Data
@@ -471,7 +517,7 @@ async function handleProductSubmit(event) {
             };
 
 
-            // Update image only if a new image was selected
+            // Update Image Only If New Image Selected
 
             if (newImageId) {
 
@@ -629,10 +675,28 @@ function initializeFieldValidation() {
 
 export function initializeProductForm() {
 
+    // Make Sure Elements Exist
+
+    if (
+        !productForm ||
+        !addProductBtn ||
+        !cancelProductBtn ||
+        !productImage ||
+        !imagePreview
+    ) {
+
+        console.error("Product form elements not found.");
+
+        return;
+
+    }
+
 
     // Add Product Button
 
     addProductBtn.addEventListener("click", () => {
+
+        if (!checkAdminPermission()) return;
 
         editingProductId = null;
 
@@ -675,6 +739,8 @@ export function initializeProductForm() {
     // Edit Product Button
 
     $(document).on("click", ".btn-edit", function () {
+
+        if (!checkAdminPermission()) return;
 
         const productId = $(this).data("id");
 
