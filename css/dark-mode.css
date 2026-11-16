@@ -94,3 +94,86 @@
 [data-theme="dark"] .nav-actions button:hover {
     color: var(--primary-color);
 }
+/* =====================================
+   SHOPORA - DARK MODE COMPONENT FIXES
+===================================== */
+
+/* Product Cards */
+[data-theme="dark"] .product-image,
+[data-theme="dark"] .favorite-product-image {
+    background-color: #252525;
+}
+
+/* Product Action Buttons */
+[data-theme="dark"] .product-actions button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+}
+
+[data-theme="dark"] .product-actions button:hover {
+    background-color: var(--primary-dark);
+    color: #ffffff;
+}
+
+/* Quantity Controls */
+[data-theme="dark"] .quantity-control {
+    background-color: #252525;
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .quantity-control input {
+    background-color: #252525;
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+/* Product Details */
+[data-theme="dark"] .quantity-btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+/* Favorites */
+[data-theme="dark"] .favorite-remove-btn {
+    background-color: #333333;
+    color: #ff6b6b;
+}
+
+[data-theme="dark"] .favorite-view-btn {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+/* About Page */
+[data-theme="dark"] .about-hero {
+    background: linear-gradient(120deg, #242b1e, #151515);
+}
+
+[data-theme="dark"] .about-hero-content p,
+[data-theme="dark"] .about-section-content p,
+[data-theme="dark"] .about-purpose-card p,
+[data-theme="dark"] .about-feature-card p {
+    color: #cccccc;
+}
+
+/* Admin Inputs */
+[data-theme="dark"] .admin-products-toolbar input,
+[data-theme="dark"] .admin-products-toolbar select {
+    background-color: #252525;
+    color: #ffffff;
+    border-color: var(--border-color);
+}
+
+/* Pagination */
+[data-theme="dark"] .pagination-btn,
+[data-theme="dark"] .pagination-number {
+    background-color: #252525;
+    color: #ffffff;
+    border-color: var(--border-color);
+}
+
+/* Product Details Image */
+[data-theme="dark"] .product-details-image {
+    background-color: #252525;
+}

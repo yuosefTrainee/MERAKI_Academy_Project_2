@@ -31,6 +31,30 @@ import {
     isAdmin
 } from "./modules/auth.js";
 
+// Customer Products
+
+import {
+    renderFeaturedProducts,
+    renderCustomerProducts,
+    initializeCustomerProductFilters,
+    initializeProductDetails
+} from "./modules/customerProducts.js";
+
+// Favorites
+
+import {
+    initializeFavorites,
+    renderFavorites
+} from "./modules/favorites.js";
+
+// Cart
+
+import {
+    initializeCart,
+    renderCart,
+    updateCartCount
+} from "./modules/cart.js";
+
 
 // =====================================
 // Render Categories
@@ -134,11 +158,15 @@ function restoreUserSession() {
 
         updateNavbar();
 
+        updateCartCount();
+
         return;
 
     }
 
     updateNavbar();
+
+    updateCartCount();
 
     if (user.role === "admin" && isAdmin()) {
 
@@ -192,6 +220,42 @@ function handleNavigation() {
 
         }
 
+
+        // Load Customer Products
+
+        if (pageId === "products") {
+
+            renderCustomerProducts();
+
+        }
+
+
+        // Load Featured Products
+
+        if (pageId === "home") {
+
+            renderFeaturedProducts();
+
+        }
+
+
+        // Load Favorites
+
+        if (pageId === "favorites") {
+
+            renderFavorites();
+
+        }
+
+
+        // Load Cart
+
+        if (pageId === "cart") {
+
+            renderCart();
+
+        }
+
     });
 
 }
@@ -210,6 +274,8 @@ function handleCategoryClick() {
         showPage("products");
 
         $("#categoryFilter").val(categoryName);
+
+        renderCustomerProducts();
 
     });
 
@@ -390,6 +456,8 @@ function handleLogin() {
 
         updateNavbar();
 
+        updateCartCount();
+
 
         // Hide Error Message
 
@@ -412,6 +480,8 @@ function handleLogin() {
         } else {
 
             showPage("home");
+
+            renderFeaturedProducts();
 
         }
 
@@ -559,6 +629,8 @@ function handleLogout() {
 
         updateNavbar();
 
+        updateCartCount();
+
         showPage("home");
 
     });
@@ -579,6 +651,8 @@ function handleLogout() {
         logoutUser();
 
         updateNavbar();
+
+        updateCartCount();
 
         showPage("home");
 
@@ -620,6 +694,25 @@ function initApp() {
     initializeProductForm();
 
 
+    // Initialize Customer Products
+
+    initializeCustomerProductFilters();
+
+    initializeProductDetails();
+
+
+    // Initialize Favorites
+
+    initializeFavorites();
+
+
+    // Initialize Cart
+
+    initializeCart();
+
+    updateCartCount();
+
+
     // Initialize Profile
 
     handleProfileUpdate();
@@ -630,7 +723,7 @@ function initApp() {
     handleRegister();
 
 
-    // Initialize Product Search and Filters
+    // Initialize Admin Product Search and Filters
 
     initializeProductFilters();
 
@@ -643,6 +736,13 @@ function initApp() {
     // Initialize Logout
 
     handleLogout();
+
+
+    // Render Customer Products
+
+    renderFeaturedProducts();
+
+    renderCustomerProducts();
 
 
     // Restore Previous Session
@@ -659,5 +759,65 @@ function initApp() {
 $(document).ready(function () {
 
     initApp();
+
+});
+
+// =====================================
+// SHOPORA - DARK / LIGHT MODE
+// =====================================
+
+$(document).ready(function () {
+
+    const themeToggle = $("#themeToggle");
+
+    // Apply Theme
+    function applyTheme(theme) {
+
+        // Set Theme
+        document.documentElement.setAttribute("data-theme", theme);
+
+        // Update Button Icon
+        if (theme === "dark") {
+
+            themeToggle.html('<i class="fa-solid fa-sun"></i>');
+
+            themeToggle.attr("aria-label", "Switch to light mode");
+
+            themeToggle.attr("title", "Light Mode");
+
+        } else {
+
+            themeToggle.html('<i class="fa-solid fa-moon"></i>');
+
+            themeToggle.attr("aria-label", "Switch to dark mode");
+
+            themeToggle.attr("title", "Dark Mode");
+
+        }
+
+    }
+
+
+    // Get Saved Theme
+    const savedTheme = localStorage.getItem("shopora-theme") || "light";
+
+    // Apply Saved Theme
+    applyTheme(savedTheme);
+
+
+    // Toggle Theme
+    themeToggle.on("click", function () {
+
+        const currentTheme = document.documentElement.getAttribute("data-theme");
+
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+        // Apply New Theme
+        applyTheme(newTheme);
+
+        // Save Theme
+        localStorage.setItem("shopora-theme", newTheme);
+
+    });
 
 });
