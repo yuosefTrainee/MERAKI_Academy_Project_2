@@ -2414,3 +2414,656 @@ td {
 #profile .section-header p {
     line-height: 1.6;
 }
+
+
+/* =====================================
+   SHOPORA - CHECKOUT PAGE
+===================================== */
+
+#checkout {
+    padding: 45px 6%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+#checkout .section-header {
+    margin-bottom: 35px;
+}
+
+#checkout .section-header h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+#checkout .section-header p {
+    color: #888;
+    font-size: 16px;
+}
+
+
+/* Main Layout */
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+
+/* Cards */
+
+.checkout-form-card,
+.checkout-summary-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.checkout-form-card h3,
+.checkout-summary-card h3 {
+    font-size: 21px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkout-form-card h3 i,
+.checkout-summary-card h3 i {
+    color: var(--primary-color);
+}
+
+
+/* Form */
+
+#checkoutForm {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+#checkoutForm .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#checkoutForm label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#checkoutForm input,
+#checkoutForm select,
+#checkoutForm textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+#checkoutForm input:focus,
+#checkoutForm select:focus,
+#checkoutForm textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(104, 124, 69, 0.12);
+}
+
+#checkoutForm textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+
+/* Submit Button */
+
+.checkout-submit-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.checkout-submit-btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+
+/* Order Summary */
+
+.checkout-summary-card {
+    position: sticky;
+    top: 110px;
+}
+
+.checkout-items {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.checkout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.checkout-item strong {
+    font-size: 14px;
+}
+
+.checkout-item p {
+    margin-top: 7px;
+    color: #888;
+    font-size: 13px;
+}
+
+.checkout-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 2px solid var(--border-color);
+    font-size: 17px;
+}
+
+.checkout-total strong {
+    color: var(--primary-color);
+    font-size: 21px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 850px) {
+
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-summary-card {
+        position: static;
+    }
+
+}
+
+@media (max-width: 576px) {
+
+    #checkout {
+        padding: 30px 15px;
+    }
+
+    .checkout-form-card,
+    .checkout-summary-card {
+        padding: 20px;
+    }
+
+    #checkout .section-header h2 {
+        font-size: 26px;
+    }
+
+}
+/* =====================================
+   SHOPORA - PAYMENT PAGE
+===================================== */
+
+#payment {
+    padding: 50px 7%;
+    min-height: 70vh;
+}
+
+#payment h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+#payment > p {
+    color: #888;
+    margin-bottom: 35px;
+}
+
+
+/* Payment Layout */
+
+.payment-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 30px;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+/* Cards */
+
+.payment-method-card,
+.payment-summary-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.payment-method-card h3,
+.payment-summary-card h3 {
+    font-size: 21px;
+    margin-bottom: 25px;
+    color: var(--text-color);
+}
+
+
+/* Payment Options */
+
+.payment-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.payment-option:hover {
+    border-color: var(--primary-color);
+    background: var(--secondary-color);
+}
+
+.payment-option input {
+    margin-top: 5px;
+    accent-color: var(--primary-color);
+}
+
+.payment-option i {
+    font-size: 22px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.payment-option strong {
+    display: block;
+    color: var(--text-color);
+    margin-bottom: 6px;
+}
+
+.payment-option p {
+    color: #888;
+    font-size: 14px;
+}
+
+
+/* Demo Notice */
+
+.demo-payment-notice {
+    background: var(--secondary-color);
+    padding: 15px;
+    border-radius: 8px;
+    margin: 25px 0;
+    color: var(--text-color);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.demo-payment-notice i {
+    color: var(--primary-color);
+    margin-right: 5px;
+}
+
+
+/* Buttons */
+
+.payment-submit-btn,
+.payment-back-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+/* Payment Summary */
+
+.payment-summary-card {
+    position: sticky;
+    top: 110px;
+}
+
+.payment-summary-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.payment-summary-item span {
+    font-size: 14px;
+}
+
+.payment-summary-item strong {
+    white-space: nowrap;
+}
+
+.payment-summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid var(--border-color);
+    font-size: 18px;
+    color: var(--text-color);
+}
+
+.payment-summary-total strong {
+    color: var(--primary-color);
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    #payment {
+        padding: 30px 5%;
+    }
+
+    .payment-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .payment-summary-card {
+        position: static;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .payment-method-card,
+    .payment-summary-card {
+        padding: 18px;
+    }
+
+    #payment h2 {
+        font-size: 26px;
+    }
+
+}
+
+
+/* =====================================
+   SHOPORA - MY ORDERS PAGE
+===================================== */
+
+#orders {
+    min-height: 65vh;
+    padding: 45px 6%;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* Page Header */
+
+#orders .section-header {
+    max-width: 1150px;
+    margin: 0 auto 35px;
+    text-align: center;
+}
+
+#orders .section-header h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+#orders .section-header p {
+    color: #888;
+    font-size: 16px;
+}
+
+/* Orders Container */
+
+#ordersContainer {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.customer-orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* Order Card */
+
+.customer-order-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.customer-order-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Order Header */
+
+.customer-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.customer-order-header h3 {
+    font-size: 19px;
+    margin-bottom: 7px;
+    color: var(--text-color);
+}
+
+.customer-order-header p {
+    color: #888;
+    font-size: 14px;
+}
+
+/* Order Status */
+
+.order-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.order-status.pending {
+    background: #fff2cc;
+    color: #946200;
+}
+
+.order-status.processing {
+    background: #dcecff;
+    color: #1763a5;
+}
+
+.order-status.shipped {
+    background: #eee2ff;
+    color: #7041a6;
+}
+
+.order-status.delivered {
+    background: #dcfce7;
+    color: #168044;
+}
+
+.order-status.cancelled {
+    background: #fee2e2;
+    color: #c62828;
+}
+
+/* Order Information */
+
+.customer-order-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
+}
+
+.customer-order-info span {
+    color: #888;
+    font-size: 14px;
+}
+
+.customer-order-info span i {
+    color: var(--primary-color);
+    margin-right: 6px;
+}
+
+.customer-order-info strong {
+    font-size: 20px;
+    color: var(--primary-color);
+}
+
+/* View Details Button */
+
+.customer-order-details-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border: none;
+    border-radius: 8px;
+    background: var(--secondary-color);
+    color: var(--primary-dark);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.customer-order-details-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Empty Orders State */
+
+#ordersContainer .empty-state {
+    max-width: 600px;
+    margin: 45px auto;
+    padding: 55px 25px;
+    text-align: center;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+}
+
+#ordersContainer .empty-state i {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 55px;
+    color: var(--primary-color);
+}
+
+#ordersContainer .empty-state h3 {
+    margin-bottom: 12px;
+    font-size: 22px;
+}
+
+#ordersContainer .empty-state p {
+    color: #888;
+    line-height: 1.7;
+}
+
+/* Order Details Popup */
+
+.customer-order-details {
+    text-align: left;
+    line-height: 1.8;
+}
+
+.customer-order-product {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Responsive */
+
+@media (max-width: 600px) {
+
+    #orders {
+        padding: 30px 15px;
+    }
+
+    #orders .section-header h2 {
+        font-size: 27px;
+    }
+
+    .customer-order-card {
+        padding: 18px;
+    }
+
+    .customer-order-header {
+        align-items: flex-start;
+    }
+
+    .customer-order-info {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .customer-order-info strong {
+        font-size: 18px;
+    }
+
+    .customer-order-details-btn {
+        width: 100%;
+    }
+
+}

@@ -1,3 +1,4 @@
+
 // =====================================
 // Import Modules
 // =====================================
@@ -55,7 +56,21 @@ import {
     updateCartCount
 } from "./modules/cart.js";
 
+// Customer Orders
 
+import {
+    initializeCustomerOrders,
+    renderCustomerOrders
+} from "./modules/orders.js";
+
+// Checkout
+
+import {
+    initializeCheckout,
+    renderCheckout
+} from "./modules/checkout.js";
+
+import { initializePayment } from "./modules/payment.js";
 // =====================================
 // Render Categories
 // =====================================
@@ -209,6 +224,21 @@ function handleNavigation() {
         }
 
 
+        // Protect Customer Orders
+
+        if (pageId === "orders") {
+
+            if (!user || user.role !== "customer") {
+
+                showPage("login");
+
+                return;
+
+            }
+
+        }
+
+
         showPage(pageId);
 
 
@@ -253,6 +283,15 @@ function handleNavigation() {
         if (pageId === "cart") {
 
             renderCart();
+
+        }
+
+
+        // Load Customer Orders
+
+        if (pageId === "orders") {
+
+            renderCustomerOrders();
 
         }
 
@@ -709,8 +748,18 @@ function initApp() {
     // Initialize Cart
 
     initializeCart();
+    // Initialize Checkout
+
+initializeCheckout();
+
+initializePayment();
 
     updateCartCount();
+
+
+    // Initialize Customer Orders
+
+    initializeCustomerOrders();
 
 
     // Initialize Profile
@@ -762,6 +811,7 @@ $(document).ready(function () {
 
 });
 
+
 // =====================================
 // SHOPORA - DARK / LIGHT MODE
 // =====================================
@@ -771,12 +821,11 @@ $(document).ready(function () {
     const themeToggle = $("#themeToggle");
 
     // Apply Theme
+
     function applyTheme(theme) {
 
-        // Set Theme
         document.documentElement.setAttribute("data-theme", theme);
 
-        // Update Button Icon
         if (theme === "dark") {
 
             themeToggle.html('<i class="fa-solid fa-sun"></i>');
@@ -799,23 +848,31 @@ $(document).ready(function () {
 
 
     // Get Saved Theme
+
     const savedTheme = localStorage.getItem("shopora-theme") || "light";
 
+
     // Apply Saved Theme
+
     applyTheme(savedTheme);
 
 
     // Toggle Theme
+
     themeToggle.on("click", function () {
 
         const currentTheme = document.documentElement.getAttribute("data-theme");
 
         const newTheme = currentTheme === "dark" ? "light" : "dark";
 
+
         // Apply New Theme
+
         applyTheme(newTheme);
 
+
         // Save Theme
+
         localStorage.setItem("shopora-theme", newTheme);
 
     });

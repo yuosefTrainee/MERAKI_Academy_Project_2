@@ -16,7 +16,7 @@ const ordersPerPage = 5;
 
 
 // =====================================
-// Helper: Escape HTML
+// Escape HTML
 // =====================================
 
 function escapeHTML(value = "") {
@@ -44,21 +44,19 @@ function getOrders() {
 
 
 // =====================================
-// Admin Permission Check
+// Admin Permission
 // =====================================
 
 function hasAdminPermission() {
 
     if (isAdmin()) return true;
 
-    if (typeof Swal !== "undefined") {
-        Swal.fire({
-            icon: "error",
-            title: "Access Denied",
-            text: "Only the administrator can manage orders.",
-            confirmButtonColor: "#687c45"
-        });
-    }
+    Swal.fire({
+        icon: "error",
+        title: "Access Denied",
+        text: "Only the administrator can manage orders.",
+        confirmButtonColor: "#687c45"
+    });
 
     return false;
 
@@ -90,13 +88,14 @@ function formatDate(date) {
 
 
 // =====================================
-// Get Status Class
+// Status Class
 // =====================================
 
 function getStatusClass(status) {
 
     const classes = {
         Pending: "pending",
+        Confirmed: "confirmed",
         Processing: "processing",
         Shipped: "shipped",
         Delivered: "delivered",
@@ -134,6 +133,7 @@ export function renderAdminOrders() {
 
                 <option value="all">All Statuses</option>
                 <option value="Pending">Pending</option>
+                <option value="Confirmed">Confirmed</option>
                 <option value="Processing">Processing</option>
                 <option value="Shipped">Shipped</option>
                 <option value="Delivered">Delivered</option>
@@ -246,8 +246,6 @@ function getFilteredOrders() {
     });
 
 
-    // Sorting
-
     if (sortValue === "newest") {
 
         filteredOrders.sort(
@@ -302,8 +300,6 @@ function displayOrders() {
     const orders = getFilteredOrders();
 
 
-    // Empty State
-
     if (orders.length === 0) {
 
         tableContainer.innerHTML = `
@@ -325,8 +321,6 @@ function displayOrders() {
     }
 
 
-    // Pagination
-
     const totalPages = Math.ceil(orders.length / ordersPerPage);
 
     if (currentPage > totalPages) {
@@ -340,8 +334,6 @@ function displayOrders() {
         startIndex + ordersPerPage
     );
 
-
-    // Table
 
     tableContainer.innerHTML = `
 
@@ -413,7 +405,6 @@ function displayOrders() {
         </table>
 
     `;
-
 
     renderOrdersPagination(totalPages);
 
@@ -548,6 +539,14 @@ function showOrderDetails(orderId) {
 
                 <p><strong>Email:</strong> ${escapeHTML(order.customerEmail || "N/A")}</p>
 
+                <p><strong>Phone:</strong> ${escapeHTML(order.phone || "N/A")}</p>
+
+                <p><strong>City:</strong> ${escapeHTML(order.city || "N/A")}</p>
+
+                <p><strong>Address:</strong> ${escapeHTML(order.address || "N/A")}</p>
+
+                <p><strong>Payment:</strong> ${escapeHTML(order.paymentMethod || "N/A")}</p>
+
                 <p><strong>Date:</strong> ${formatDate(order.createdAt)}</p>
 
                 <p><strong>Status:</strong> ${escapeHTML(order.status || "Pending")}</p>
@@ -576,10 +575,129 @@ function showOrderDetails(orderId) {
 
 
 // =====================================
+// Restore Stock When Order Is Cancelled
+// =====================================
+
+function restoreOrderStock(order) {
+
+    if (order.stockRestored) return true;
+
+    const products = getData("products", []);
+
+    const items = Array.isArray(order.items) ? order.items : [];
+
+    if (items.length === 0) return false;
+
+
+    // Validate all items first
+
+    for (const item of items) {
+
+        const product = products.find(
+            p => String(p.id) === String(item.productId)
+        );
+
+        const quantity = Number(item.quantity);
+
+        if (
+            !product ||
+            !Number.isFinite(quantity) ||
+            quantity <= 0 ||
+            !Number.isFinite(Number(product.stock))
+        ) {
+            return false;
+        }
+
+    }
+
+
+    // Restore quantities
+
+    const updatedProducts = products.map(product => {
+
+        const item = items.find(
+            i => String(i.productId) === String(product.id)
+        );
+
+        if (!item) return product;
+
+        return {
+            ...product,
+            stock: Number(product.stock) + Number(item.quantity)
+        };
+
+    });
+
+
+    return saveData("products", updatedProducts);
+
+}
+
+
+// =====================================
+// Allowed Next Actions
+// =====================================
+
+function getNextOrderActions(status) {
+
+    const actions = {
+
+        Pending: [
+            {
+                value: "Confirmed",
+                label: "Confirm Order"
+            },
+            {
+                value: "Cancelled",
+                label: "Reject Order"
+            }
+        ],
+
+        Confirmed: [
+            {
+                value: "Processing",
+                label: "Start Processing"
+            },
+            {
+                value: "Cancelled",
+                label: "Cancel Order"
+            }
+        ],
+
+        Processing: [
+            {
+                value: "Shipped",
+                label: "Mark as Shipped"
+            },
+            {
+                value: "Cancelled",
+                label: "Cancel Order"
+            }
+        ],
+
+        Shipped: [
+            {
+                value: "Delivered",
+                label: "Mark as Delivered"
+            }
+        ],
+
+        Delivered: [],
+
+        Cancelled: []
+
+    };
+
+    return actions[status] || [];
+
+}
+
+
+// =====================================
 // Update Order Status
 // =====================================
 
-function updateOrderStatus(orderId) {
+async function updateOrderStatus(orderId) {
 
     if (!hasAdminPermission()) return;
 
@@ -591,27 +709,47 @@ function updateOrderStatus(orderId) {
 
     if (!order) return;
 
-    Swal.fire({
+    const currentStatus = order.status || "Pending";
 
-        title: "Update Order Status",
+    const actions = getNextOrderActions(currentStatus);
+
+
+    if (actions.length === 0) {
+
+        Swal.fire({
+            icon: "info",
+            title: "No Further Actions",
+            text: `This order is already ${currentStatus}.`,
+            confirmButtonColor: "#687c45"
+        });
+
+        return;
+
+    }
+
+
+    const inputOptions = {};
+
+    actions.forEach(action => {
+        inputOptions[action.value] = action.label;
+    });
+
+
+    const result = await Swal.fire({
+
+        title: "Order Workflow",
+
+        text: `Current Status: ${currentStatus}`,
 
         input: "select",
 
-        inputOptions: {
+        inputOptions,
 
-            Pending: "Pending",
-            Processing: "Processing",
-            Shipped: "Shipped",
-            Delivered: "Delivered",
-            Cancelled: "Cancelled"
-
-        },
-
-        inputValue: order.status || "Pending",
+        inputPlaceholder: "Choose next action",
 
         showCancelButton: true,
 
-        confirmButtonText: "Save",
+        confirmButtonText: "Continue",
 
         cancelButtonText: "Cancel",
 
@@ -620,53 +758,117 @@ function updateOrderStatus(orderId) {
         inputValidator: value => {
 
             if (!value) {
-                return "Please select a status!";
+                return "Please select an action.";
             }
 
         }
 
-    }).then(result => {
+    });
 
-        if (!result.isConfirmed) return;
 
-        // Verify permission again before saving the status change.
+    if (!result.isConfirmed) return;
 
-        if (!isAdmin()) {
-            hasAdminPermission();
-            return;
-        }
+    if (!hasAdminPermission()) return;
 
-        order.status = result.value;
 
-        const saved = saveData("orders", orders);
+    const newStatus = result.value;
 
-        if (saved) {
+    // Verify allowed transition
+
+    const allowed = getNextOrderActions(currentStatus)
+        .some(action => action.value === newStatus);
+
+    if (!allowed) {
+
+        Swal.fire({
+            icon: "error",
+            title: "Invalid Action",
+            text: "This status transition is not allowed."
+        });
+
+        return;
+
+    }
+
+
+    // Save original stock for rollback
+
+    const originalProducts = getData("products", []);
+
+
+    // Restore stock if order is cancelled
+
+    if (newStatus === "Cancelled") {
+
+        const restored = restoreOrderStock(order);
+
+        if (!restored) {
 
             Swal.fire({
-
-                icon: "success",
-                title: "Updated!",
-                text: "Order status updated successfully.",
-                confirmButtonColor: "#687c45"
-
-            });
-
-            displayOrders();
-
-        }
-
-        else {
-
-            Swal.fire({
-
                 icon: "error",
-                title: "Error",
-                text: "Could not update order status."
-
+                title: "Stock Error",
+                text: "Could not restore product stock. Order was not cancelled."
             });
+
+            return;
 
         }
 
+    }
+
+
+    // Update status
+
+    order.status = newStatus;
+
+    order.updatedAt = new Date().toISOString();
+
+    const saved = saveData("orders", orders);
+
+
+    if (!saved) {
+
+        // Rollback stock if saving order fails
+
+        if (newStatus === "Cancelled") {
+
+            saveData("products", originalProducts);
+
+        }
+
+        Swal.fire({
+            icon: "error",
+            title: "Update Failed",
+            text: "Could not save order status."
+        });
+
+        return;
+
+    }
+
+
+    // Notify other parts of the application
+
+    window.dispatchEvent(
+        new CustomEvent("shopora:orders-updated", {
+            detail: {
+                orderId,
+                status: newStatus
+            }
+        })
+    );
+
+
+    // Refresh table
+
+    displayOrders();
+
+
+    Swal.fire({
+        icon: "success",
+        title: "Order Updated!",
+        text: `Order status changed to ${newStatus}.`,
+        confirmButtonColor: "#687c45"
     });
 
 }

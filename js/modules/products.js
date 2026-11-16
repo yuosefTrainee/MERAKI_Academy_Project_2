@@ -155,3 +155,61 @@ export function deleteProduct(productId) {
     return saveData("products", updatedProducts);
 
 }
+
+
+
+// =================================
+// Reduce Product Stock After Purchase
+// =================================
+
+export function reduceProductStock(items) {
+
+    const products = getProducts();
+
+    // Validate all products first
+    for (const item of items) {
+
+        const product = products.find(
+            p => String(p.id) === String(item.productId)
+        );
+
+        if (!product) {
+            console.error("Product not found:", item.productId);
+            return false;
+        }
+
+        const quantity = Number(item.quantity);
+        const stock = Number(product.stock);
+
+        if (
+            !Number.isFinite(quantity) ||
+            quantity <= 0 ||
+            !Number.isFinite(stock) ||
+            stock < quantity
+        ) {
+            console.error("Invalid stock or quantity:", item);
+            return false;
+        }
+
+    }
+
+    // Update stock only after all products are validated
+    const updatedProducts = products.map(product => {
+
+        const item = items.find(
+            i => String(i.productId) === String(product.id)
+        );
+
+        if (!item) return product;
+
+        return {
+            ...product,
+            stock: Number(product.stock) - Number(item.quantity)
+        };
+
+    });
+
+    // Save all changes together
+    return saveData("products", updatedProducts);
+
+}
