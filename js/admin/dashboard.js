@@ -1,4 +1,14 @@
 import { getData } from "../modules/storage.js";
+import { getCurrentLanguage } from "../modules/language.js";
+
+// =====================================
+// Translation Helper
+// =====================================
+
+function getText(english, arabic) {
+    return getCurrentLanguage() === "ar" ? arabic : english;
+}
+
 
 // =====================================
 // Dashboard Statistics
@@ -33,12 +43,17 @@ export function renderDashboard() {
     $("#totalCustomers").text(customers.length);
 
     // Dashboard date
+    const language = getCurrentLanguage();
+
     $("#dashboardDate").text(
-        new Date().toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        })
+        new Date().toLocaleDateString(
+            language === "ar" ? "ar-JO" : "en-US",
+            {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        )
     );
 
     renderRecentOrders(orders);
@@ -55,13 +70,10 @@ function showChartMessage(canvas, message) {
 
     const parent = canvas.parentElement;
 
-    // Hide canvas
     canvas.style.display = "none";
 
-    // Remove old message
     parent.querySelector(".chart-empty-state")?.remove();
 
-    // Create message
     const emptyMessage = document.createElement("div");
 
     emptyMessage.className = "chart-empty-state";
@@ -79,10 +91,8 @@ function hideChartMessage(canvas) {
 
     const parent = canvas.parentElement;
 
-    // Show canvas
     canvas.style.display = "block";
 
-    // Remove empty message
     parent.querySelector(".chart-empty-state")?.remove();
 }
 
@@ -102,8 +112,20 @@ function renderRecentOrders(orders) {
         container.html(`
             <div class="dashboard-empty-state">
                 <i class="fa-solid fa-receipt"></i>
-                <p>No orders available yet.</p>
-                <span>New orders will appear here.</span>
+
+                <p>
+                    ${getText(
+                        "No orders available yet.",
+                        "لا توجد طلبات حتى الآن."
+                    )}
+                </p>
+
+                <span>
+                    ${getText(
+                        "New orders will appear here.",
+                        "ستظهر الطلبات الجديدة هنا."
+                    )}
+                </span>
             </div>
         `);
 
@@ -112,26 +134,33 @@ function renderRecentOrders(orders) {
 
     const recentOrders = [...orders]
         .sort((a, b) => {
+
             const dateA = new Date(a.createdAt || 0).getTime();
             const dateB = new Date(b.createdAt || 0).getTime();
 
             return dateB - dateA;
+
         })
         .slice(0, 5);
 
+
     const table = $(`
         <table class="admin-table">
+
             <thead>
                 <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Total</th>
-                    <th>Status</th>
+                    <th>${getText("Order ID", "رقم الطلب")}</th>
+                    <th>${getText("Customer", "العميل")}</th>
+                    <th>${getText("Total", "الإجمالي")}</th>
+                    <th>${getText("Status", "الحالة")}</th>
                 </tr>
             </thead>
+
             <tbody></tbody>
+
         </table>
     `);
+
 
     recentOrders.forEach(order => {
 
@@ -143,7 +172,7 @@ function renderRecentOrders(orders) {
 
         row.append(
             $("<td></td>").text(
-                order.customerName || "Customer"
+                order.customerName || getText("Customer", "العميل")
             )
         );
 
@@ -153,22 +182,52 @@ function renderRecentOrders(orders) {
             )
         );
 
+
         const status = order.status || "Pending";
 
         const statusCell = $("<td></td>");
 
         const badge = $("<span></span>")
             .addClass(`status-badge status-${status.toLowerCase()}`)
-            .text(status);
+            .text(getStatusText(status));
 
         statusCell.append(badge);
 
         row.append(statusCell);
 
         table.find("tbody").append(row);
+
     });
 
     container.append(table);
+}
+
+
+// =====================================
+// Order Status Translation
+// =====================================
+
+function getStatusText(status) {
+
+    const statuses = {
+
+        Pending: "قيد الانتظار",
+
+        Processing: "قيد المعالجة",
+
+        Shipped: "تم الشحن",
+
+        Delivered: "تم التوصيل",
+
+        Cancelled: "ملغي"
+
+    };
+
+    if (getCurrentLanguage() === "ar") {
+        return statuses[status] || status;
+    }
+
+    return status;
 }
 
 
@@ -187,13 +246,20 @@ function renderSalesChart(orders) {
     }
 
     if (salesChartInstance) {
+
         salesChartInstance.destroy();
         salesChartInstance = null;
+
     }
+
+    const language = getCurrentLanguage();
+
+    const isArabic = language === "ar";
 
     const currentYear = new Date().getFullYear();
 
     const monthlySales = Array(12).fill(0);
+
 
     orders.forEach(order => {
 
@@ -208,15 +274,23 @@ function renderSalesChart(orders) {
             monthlySales[date.getMonth()] += Number(order.total || 0);
 
         }
+
     });
 
-    const hasSales = monthlySales.some(amount => amount > 0);
+
+    const hasSales = monthlySales.some(
+        amount => amount > 0
+    );
+
 
     if (!hasSales) {
 
         showChartMessage(
             canvas,
-            "No sales data available yet."
+            getText(
+                "No sales data available yet.",
+                "لا توجد بيانات مبيعات حتى الآن."
+            )
         );
 
         return;
@@ -224,21 +298,55 @@ function renderSalesChart(orders) {
 
     hideChartMessage(canvas);
 
+
+    // Months Translation
+    const months = isArabic
+
+        ? [
+            "يناير",
+            "فبراير",
+            "مارس",
+            "أبريل",
+            "مايو",
+            "يونيو",
+            "يوليو",
+            "أغسطس",
+            "سبتمبر",
+            "أكتوبر",
+            "نوفمبر",
+            "ديسمبر"
+        ]
+
+        : [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ];
+
+
     salesChartInstance = new Chart(canvas, {
 
         type: "line",
 
         data: {
 
-            labels: [
-                "Jan", "Feb", "Mar", "Apr",
-                "May", "Jun", "Jul", "Aug",
-                "Sep", "Oct", "Nov", "Dec"
-            ],
+            labels: months,
 
             datasets: [{
 
-                label: "Sales ($)",
+                label: getText(
+                    "Sales ($)",
+                    "المبيعات ($)"
+                ),
 
                 data: monthlySales,
 
@@ -265,7 +373,9 @@ function renderSalesChart(orders) {
             plugins: {
 
                 legend: {
+
                     display: false
+
                 },
 
                 tooltip: {
@@ -273,7 +383,12 @@ function renderSalesChart(orders) {
                     callbacks: {
 
                         label: function(context) {
-                            return `Sales: $${context.parsed.y.toFixed(2)}`;
+
+                            return `${getText(
+                                "Sales",
+                                "المبيعات"
+                            )}: $${context.parsed.y.toFixed(2)}`;
+
                         }
 
                     }
@@ -285,7 +400,9 @@ function renderSalesChart(orders) {
             scales: {
 
                 y: {
+
                     beginAtZero: true
+
                 }
 
             }
@@ -293,6 +410,7 @@ function renderSalesChart(orders) {
         }
 
     });
+
 }
 
 
@@ -311,15 +429,21 @@ function renderOrdersChart(orders) {
     }
 
     if (ordersChartInstance) {
+
         ordersChartInstance.destroy();
         ordersChartInstance = null;
+
     }
+
 
     if (!orders.length) {
 
         showChartMessage(
             canvas,
-            "No orders available yet."
+            getText(
+                "No orders available yet.",
+                "لا توجد طلبات حتى الآن."
+            )
         );
 
         return;
@@ -327,6 +451,8 @@ function renderOrdersChart(orders) {
 
     hideChartMessage(canvas);
 
+
+    // Original statuses used for database comparison
     const statuses = [
         "Pending",
         "Processing",
@@ -334,6 +460,13 @@ function renderOrdersChart(orders) {
         "Delivered",
         "Cancelled"
     ];
+
+
+    // Translate chart labels only
+    const translatedStatuses = statuses.map(
+        status => getStatusText(status)
+    );
+
 
     const statusCounts = statuses.map(status => {
 
@@ -343,13 +476,17 @@ function renderOrdersChart(orders) {
 
     });
 
+
+    const isArabic = getCurrentLanguage() === "ar";
+
+
     ordersChartInstance = new Chart(canvas, {
 
         type: "doughnut",
 
         data: {
 
-            labels: statuses,
+            labels: translatedStatuses,
 
             datasets: [{
 
@@ -373,7 +510,11 @@ function renderOrdersChart(orders) {
 
                 legend: {
 
-                    position: "bottom"
+                    position: "bottom",
+
+                    rtl: isArabic,
+
+                    textDirection: isArabic ? "rtl" : "ltr"
 
                 }
 
@@ -384,3 +525,21 @@ function renderOrdersChart(orders) {
     });
 
 }
+
+
+// =====================================
+// Refresh Dashboard On Language Change
+// =====================================
+
+window.addEventListener("shopora:language-changed", () => {
+
+    if (
+        document.getElementById("salesChart") ||
+        document.getElementById("ordersChart")
+    ) {
+
+        renderDashboard();
+
+    }
+
+});

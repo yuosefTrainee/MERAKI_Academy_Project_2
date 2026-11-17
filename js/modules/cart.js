@@ -6,8 +6,36 @@ import { getData, saveData } from "./storage.js";
 import { getCurrentUser } from "./auth.js";
 import { getProducts } from "./products.js";
 import { getImage } from "./database.js";
+import { getCurrentLanguage } from "./language.js";
 
 let cartImageURLs = [];
+
+
+// =====================================
+// LANGUAGE HELPER
+// =====================================
+
+function t(english, arabic) {
+    return getCurrentLanguage() === "ar" ? arabic : english;
+}
+
+function getItemText(quantity) {
+
+    if (getCurrentLanguage() === "ar") {
+
+        if (quantity === 1) return "عنصر واحد";
+        if (quantity === 2) return "عنصران";
+        if (quantity >= 3 && quantity <= 10) {
+            return `${quantity} عناصر`;
+        }
+
+        return `${quantity} عنصر`;
+    }
+
+    return quantity === 1
+        ? "item"
+        : "items";
+}
 
 
 // =====================================
@@ -119,8 +147,11 @@ export function addToCart(productId, quantity = 1) {
 
         showMessage(
             "warning",
-            "Login Required",
-            "Please login before adding products to your cart."
+            t("Login Required", "تسجيل الدخول مطلوب"),
+            t(
+                "Please login before adding products to your cart.",
+                "يرجى تسجيل الدخول قبل إضافة المنتجات إلى السلة."
+            )
         );
 
         return false;
@@ -133,7 +164,10 @@ export function addToCart(productId, quantity = 1) {
 
     if (!product) {
 
-        showMessage("error", "Product Not Found");
+        showMessage(
+            "error",
+            t("Product Not Found", "المنتج غير موجود")
+        );
 
         return false;
 
@@ -143,7 +177,10 @@ export function addToCart(productId, quantity = 1) {
 
     if (!Number.isInteger(requestedQuantity) || requestedQuantity < 1) {
 
-        showMessage("warning", "Invalid Quantity");
+        showMessage(
+            "warning",
+            t("Invalid Quantity", "الكمية غير صالحة")
+        );
 
         return false;
 
@@ -153,7 +190,10 @@ export function addToCart(productId, quantity = 1) {
 
     if (stock <= 0) {
 
-        showMessage("warning", "Sold Out");
+        showMessage(
+            "warning",
+            t("Sold Out", "نفدت الكمية")
+        );
 
         return false;
 
@@ -173,8 +213,10 @@ export function addToCart(productId, quantity = 1) {
 
         showMessage(
             "warning",
-            "Not Enough Stock",
-            `Only ${stock} item(s) are available.`
+            t("Not Enough Stock", "الكمية غير متوفرة"),
+            getCurrentLanguage() === "ar"
+                ? `المتوفر فقط ${stock} قطعة.`
+                : `Only ${stock} item(s) are available.`
         );
 
         return false;
@@ -200,8 +242,10 @@ export function addToCart(productId, quantity = 1) {
 
     showMessage(
         "success",
-        "Added to Cart",
-        `${product.name} was added successfully.`
+        t("Added to Cart", "تمت الإضافة إلى السلة"),
+        getCurrentLanguage() === "ar"
+            ? `تمت إضافة ${product.name} بنجاح.`
+            : `${product.name} was added successfully.`
     );
 
     return true;
@@ -262,8 +306,10 @@ export function updateCartQuantity(productId, quantity) {
 
         showMessage(
             "warning",
-            "Not Enough Stock",
-            `Only ${stock} item(s) are available.`
+            t("Not Enough Stock", "الكمية غير متوفرة"),
+            getCurrentLanguage() === "ar"
+                ? `المتوفر فقط ${stock} قطعة.`
+                : `Only ${stock} item(s) are available.`
         );
 
         return false;
@@ -384,8 +430,6 @@ async function getCartProductImage(product) {
     }
 
 }
-
-
 // =====================================
 // EMPTY CART
 // =====================================
@@ -400,10 +444,16 @@ function renderEmptyCart(container, summary) {
                 <i class="fa-solid fa-cart-shopping"></i>
             </div>
 
-            <h3>Your Cart Is Empty</h3>
+            <h3>${t(
+                "Your Cart Is Empty",
+                "سلة التسوق فارغة"
+            )}</h3>
 
             <p>
-                You haven't added any products to your cart yet.
+                ${t(
+                    "You haven't added any products to your cart yet.",
+                    "لم تقم بإضافة أي منتجات إلى سلة التسوق حتى الآن."
+                )}
             </p>
 
             <button
@@ -411,7 +461,11 @@ function renderEmptyCart(container, summary) {
                 class="btn-primary"
                 data-page="products">
 
-                Continue Shopping
+                ${t(
+                    "Continue Shopping",
+                    "متابعة التسوق"
+                )}
+
                 <i class="fa-solid fa-arrow-right"></i>
 
             </button>
@@ -441,9 +495,6 @@ export async function renderCart() {
 
     if (!container) return;
 
-    // Remove the old checkout button from HTML
-    // The new button will be rendered inside the summary.
-
     const oldCheckoutButton = document.querySelector(
         "#cart > #checkoutBtn"
     );
@@ -466,10 +517,16 @@ export async function renderCart() {
                     <i class="fa-solid fa-lock"></i>
                 </div>
 
-                <h3>Login Required</h3>
+                <h3>${t(
+                    "Login Required",
+                    "تسجيل الدخول مطلوب"
+                )}</h3>
 
                 <p>
-                    Please login to view your shopping cart.
+                    ${t(
+                        "Please login to view your shopping cart.",
+                        "يرجى تسجيل الدخول لعرض سلة التسوق."
+                    )}
                 </p>
 
                 <button
@@ -477,7 +534,10 @@ export async function renderCart() {
                     class="btn-primary"
                     data-page="login">
 
-                    Login Now
+                    ${t(
+                        "Login Now",
+                        "سجل الدخول الآن"
+                    )}
 
                 </button>
 
@@ -544,7 +604,9 @@ export async function renderCart() {
                 <div class="cart-item-info">
 
                     <span class="cart-item-category">
-                        ${escapeHTML(product.category || "Product")}
+                        ${escapeHTML(
+                            product.category || t("Product", "منتج")
+                        )}
                     </span>
 
                     <h3>
@@ -556,14 +618,17 @@ export async function renderCart() {
                     </p>
 
                     <span class="cart-item-unit-price">
-                        ${formatPrice(product.price)} / item
+                        ${formatPrice(product.price)}
+                        / ${t("item", "قطعة")}
                     </span>
 
                 </div>
 
                 <div class="cart-item-quantity">
 
-                    <span class="cart-label">Quantity</span>
+                    <span class="cart-label">
+                        ${t("Quantity", "الكمية")}
+                    </span>
 
                     <div class="quantity-control">
 
@@ -571,7 +636,10 @@ export async function renderCart() {
                             type="button"
                             data-cart-action="decrease"
                             data-product-id="${escapeHTML(product.id)}"
-                            aria-label="Decrease quantity">
+                            aria-label="${t(
+                                "Decrease quantity",
+                                "تقليل الكمية"
+                            )}">
 
                             <i class="fa-solid fa-minus"></i>
 
@@ -585,7 +653,10 @@ export async function renderCart() {
                             type="button"
                             data-cart-action="increase"
                             data-product-id="${escapeHTML(product.id)}"
-                            aria-label="Increase quantity"
+                            aria-label="${t(
+                                "Increase quantity",
+                                "زيادة الكمية"
+                            )}"
                             ${quantity >= stock ? "disabled" : ""}>
 
                             <i class="fa-solid fa-plus"></i>
@@ -598,7 +669,9 @@ export async function renderCart() {
 
                 <div class="cart-item-total">
 
-                    <span class="cart-label">Subtotal</span>
+                    <span class="cart-label">
+                        ${t("Subtotal", "المجموع الفرعي")}
+                    </span>
 
                     <strong>
                         ${formatPrice(subtotal)}
@@ -610,7 +683,8 @@ export async function renderCart() {
                         data-remove-cart="${escapeHTML(product.id)}">
 
                         <i class="fa-solid fa-trash"></i>
-                        Remove
+
+                        ${t("Remove", "إزالة")}
 
                     </button>
 
@@ -632,7 +706,10 @@ export async function renderCart() {
 
     `;
 
-    // Calculate summary
+
+    // =====================================
+    // CART SUMMARY
+    // =====================================
 
     const totalItems = validItems.reduce(
         (total, item) => total + Number(item.quantity),
@@ -649,17 +726,24 @@ export async function renderCart() {
 
                 <div class="cart-summary-heading">
 
-                    <h3>Order Summary</h3>
+                    <h3>
+                        ${t(
+                            "Order Summary",
+                            "ملخص الطلب"
+                        )}
+                    </h3>
 
                     <span>
-                        ${totalItems} ${totalItems === 1 ? "item" : "items"}
+                        ${getItemText(totalItems)}
                     </span>
 
                 </div>
 
                 <div class="cart-summary-row">
 
-                    <span>Subtotal</span>
+                    <span>
+                        ${t("Subtotal", "المجموع الفرعي")}
+                    </span>
 
                     <strong>
                         ${formatPrice(totalPrice)}
@@ -669,9 +753,13 @@ export async function renderCart() {
 
                 <div class="cart-summary-row">
 
-                    <span>Shipping</span>
+                    <span>
+                        ${t("Shipping", "الشحن")}
+                    </span>
 
-                    <strong>Free</strong>
+                    <strong>
+                        ${t("Free", "مجاني")}
+                    </strong>
 
                 </div>
 
@@ -679,7 +767,9 @@ export async function renderCart() {
 
                 <div class="cart-summary-row cart-summary-total">
 
-                    <strong>Total</strong>
+                    <strong>
+                        ${t("Total", "الإجمالي")}
+                    </strong>
 
                     <strong>
                         ${formatPrice(totalPrice)}
@@ -692,14 +782,24 @@ export async function renderCart() {
                     class="btn-primary cart-checkout-btn"
                     id="checkoutBtn">
 
-                    Proceed to Checkout
+                    ${t(
+                        "Proceed to Checkout",
+                        "متابعة إلى إتمام الطلب"
+                    )}
+
                     <i class="fa-solid fa-arrow-right"></i>
 
                 </button>
 
                 <p class="cart-secure-note">
+
                     <i class="fa-solid fa-shield-halved"></i>
-                    Secure checkout
+
+                    ${t(
+                        "Secure checkout",
+                        "إتمام شراء آمن"
+                    )}
+
                 </p>
 
             </div>
@@ -777,6 +877,19 @@ export function initializeCart() {
 
             }
 
+        }
+
+    });
+
+
+    // Re-render cart when language changes
+
+    window.addEventListener("shopora:language-changed", () => {
+
+        const cartSection = document.getElementById("cart");
+
+        if (cartSection && cartSection.classList.contains("active")) {
+            renderCart();
         }
 
     });

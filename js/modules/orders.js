@@ -106,9 +106,13 @@ export function renderCustomerOrders() {
 
         container.innerHTML = `
             <div class="empty-state">
+
                 <i class="fa-solid fa-lock"></i>
+
                 <h3>Login Required</h3>
+
                 <p>Please login to view your orders.</p>
+
             </div>
         `;
 
@@ -122,9 +126,13 @@ export function renderCustomerOrders() {
 
         container.innerHTML = `
             <div class="empty-state">
+
                 <i class="fa-solid fa-box-open"></i>
+
                 <h3>No Orders Yet</h3>
+
                 <p>Your orders will appear here after checkout.</p>
+
             </div>
         `;
 
@@ -143,11 +151,15 @@ export function renderCustomerOrders() {
                     <div class="customer-order-header">
 
                         <div>
-                            <h3>Order #${escapeHTML(order.id)}</h3>
+
+                            <h3>
+                                <span>Order #</span>${escapeHTML(order.id)}
+                            </h3>
 
                             <p>
                                 ${formatDate(order.createdAt)}
                             </p>
+
                         </div>
 
                         <span class="order-status ${getStatusClass(order.status)}">
@@ -156,11 +168,17 @@ export function renderCustomerOrders() {
 
                     </div>
 
+
                     <div class="customer-order-info">
 
                         <span>
+
                             <i class="fa-solid fa-box"></i>
-                            ${Array.isArray(order.items) ? order.items.length : 0} Products
+
+                            ${Array.isArray(order.items) ? order.items.length : 0}
+
+                            <span>Products</span>
+
                         </span>
 
                         <strong>
@@ -169,12 +187,14 @@ export function renderCustomerOrders() {
 
                     </div>
 
+
                     <button
                         type="button"
                         class="btn-secondary customer-order-details-btn"
                         data-customer-order-details="${escapeHTML(order.id)}">
 
                         <i class="fa-solid fa-eye"></i>
+
                         View Details
 
                     </button>
@@ -213,14 +233,19 @@ function showCustomerOrderDetails(orderId) {
             <div class="customer-order-product">
 
                 <span>
+
                     ${escapeHTML(item.name || item.productName || "Product")}
+
                     × ${Number(item.quantity || 1)}
+
                 </span>
 
                 <strong>
+
                     ${formatPrice(
                         Number(item.price || 0) * Number(item.quantity || 1)
                     )}
+
                 </strong>
 
             </div>
@@ -232,31 +257,50 @@ function showCustomerOrderDetails(orderId) {
 
     Swal.fire({
 
-        title: `Order #${escapeHTML(order.id)}`,
+        title: `
+            <span>Order #</span>${escapeHTML(order.id)}
+        `,
 
         html: `
 
             <div class="customer-order-details">
 
                 <p>
+
                     <strong>Date:</strong>
+
                     ${formatDate(order.createdAt)}
+
                 </p>
+
 
                 <p>
+
                     <strong>Status:</strong>
+
                     ${escapeHTML(order.status || "Pending")}
+
                 </p>
 
+
                 <hr>
+
 
                 <h3>Products</h3>
 
                 ${productsHTML}
 
+
                 <hr>
 
-                <h3>Total: ${formatPrice(order.total)}</h3>
+
+                <h3>
+
+                    <span>Total:</span>
+
+                    ${formatPrice(order.total)}
+
+                </h3>
 
             </div>
 

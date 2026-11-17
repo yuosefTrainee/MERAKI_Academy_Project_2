@@ -1,10 +1,10 @@
-
 // =====================================
 // SHOPORA - ADMIN MANAGE CUSTOMERS
 // =====================================
 
 import { getData, saveData } from "../modules/storage.js";
 import { isAdmin } from "../modules/auth.js";
+import { getCurrentLanguage } from "../modules/language.js";
 
 
 // =====================================
@@ -14,6 +14,18 @@ import { isAdmin } from "../modules/auth.js";
 let currentPage = 1;
 
 const usersPerPage = 5;
+
+let currentSearch = "";
+let currentSort = "nameAsc";
+
+
+// =====================================
+// Translation Helper
+// =====================================
+
+function t(english, arabic) {
+    return getCurrentLanguage() === "ar" ? arabic : english;
+}
 
 
 // =====================================
@@ -42,12 +54,17 @@ function hasAdminPermission() {
     if (isAdmin()) return true;
 
     if (typeof Swal !== "undefined") {
+
         Swal.fire({
             icon: "error",
-            title: "Access Denied",
-            text: "Only the administrator can manage customers.",
+            title: t("Access Denied", "تم رفض الوصول"),
+            text: t(
+                "Only the administrator can manage customers.",
+                "فقط المسؤول يستطيع إدارة العملاء."
+            ),
             confirmButtonColor: "#687c45"
         });
+
     }
 
     return false;
@@ -101,8 +118,14 @@ export function renderAdminUsers() {
 
         container.innerHTML = `
             <div class="customers-empty-state">
-                <h3>Access Denied</h3>
-                <p>Only the administrator can manage customers.</p>
+                <h3>${t("Access Denied", "تم رفض الوصول")}</h3>
+
+                <p>
+                    ${t(
+                        "Only the administrator can manage customers.",
+                        "فقط المسؤول يستطيع إدارة العملاء."
+                    )}
+                </p>
             </div>
         `;
 
@@ -118,18 +141,30 @@ export function renderAdminUsers() {
             <input
                 type="text"
                 id="customerSearch"
-                placeholder="Search by name or email..."
+                placeholder="${t(
+                    "Search by name or email...",
+                    "ابحث بالاسم أو البريد الإلكتروني..."
+                )}"
+                value="${escapeHTML(currentSearch)}"
             >
 
             <select id="customerSortFilter">
 
-                <option value="nameAsc">Name: A - Z</option>
+                <option value="nameAsc" ${currentSort === "nameAsc" ? "selected" : ""}>
+                    ${t("Name: A - Z", "الاسم: أ - ي")}
+                </option>
 
-                <option value="nameDesc">Name: Z - A</option>
+                <option value="nameDesc" ${currentSort === "nameDesc" ? "selected" : ""}>
+                    ${t("Name: Z - A", "الاسم: ي - أ")}
+                </option>
 
-                <option value="ordersHigh">Most Orders</option>
+                <option value="ordersHigh" ${currentSort === "ordersHigh" ? "selected" : ""}>
+                    ${t("Most Orders", "الأكثر طلبًا")}
+                </option>
 
-                <option value="ordersLow">Least Orders</option>
+                <option value="ordersLow" ${currentSort === "ordersLow" ? "selected" : ""}>
+                    ${t("Least Orders", "الأقل طلبًا")}
+                </option>
 
             </select>
 
@@ -165,6 +200,8 @@ function initializeCustomerFilters() {
 
     searchInput.addEventListener("input", function () {
 
+        currentSearch = this.value;
+
         currentPage = 1;
 
         displayCustomers();
@@ -173,6 +210,8 @@ function initializeCustomerFilters() {
 
 
     sortFilter.addEventListener("change", function () {
+
+        currentSort = this.value;
 
         currentPage = 1;
 
@@ -193,14 +232,9 @@ function getFilteredCustomers() {
 
     const customers = getCustomers();
 
-    const searchValue = document
-        .getElementById("customerSearch")
-        .value.trim()
-        .toLowerCase();
+    const searchValue = currentSearch.trim().toLowerCase();
 
-    const sortValue = document
-        .getElementById("customerSortFilter")
-        .value;
+    const sortValue = currentSort;
 
 
     let filteredCustomers = customers.filter(customer => {
@@ -281,9 +315,16 @@ function displayCustomers() {
 
             <div class="customers-empty-state">
 
-                <h3>No Customers Found</h3>
+                <h3>
+                    ${t("No Customers Found", "لم يتم العثور على عملاء")}
+                </h3>
 
-                <p>There are no registered customers to display.</p>
+                <p>
+                    ${t(
+                        "There are no registered customers to display.",
+                        "لا يوجد عملاء مسجلون لعرضهم."
+                    )}
+                </p>
 
             </div>
 
@@ -325,15 +366,15 @@ function displayCustomers() {
 
                 <tr>
 
-                    <th>Customer</th>
+                    <th>${t("Customer", "العميل")}</th>
 
-                    <th>Email</th>
+                    <th>${t("Email", "البريد الإلكتروني")}</th>
 
-                    <th>Total Orders</th>
+                    <th>${t("Total Orders", "إجمالي الطلبات")}</th>
 
-                    <th>Role</th>
+                    <th>${t("Role", "الدور")}</th>
 
-                    <th>Actions</th>
+                    <th>${t("Actions", "الإجراءات")}</th>
 
                 </tr>
 
@@ -361,7 +402,9 @@ function displayCustomers() {
                                 </div>
 
                                 <span>
-                                    ${escapeHTML(customer.name || "Unknown")}
+                                    ${escapeHTML(
+                                        customer.name || t("Unknown", "غير معروف")
+                                    )}
                                 </span>
 
                             </div>
@@ -375,16 +418,18 @@ function displayCustomers() {
 
 
                         <td>
+
                             <span class="customer-orders-count">
                                 ${getCustomerOrdersCount(customer)}
                             </span>
+
                         </td>
 
 
                         <td>
 
                             <span class="customer-role">
-                                Customer
+                                ${t("Customer", "عميل")}
                             </span>
 
                         </td>
@@ -393,20 +438,22 @@ function displayCustomers() {
                         <td>
 
                             <button
+                                type="button"
                                 class="customer-action-btn details-btn"
                                 data-customer-action="details"
                                 data-customer-id="${escapeHTML(customer.id)}"
                             >
-                                Details
+                                ${t("Details", "التفاصيل")}
                             </button>
 
 
                             <button
+                                type="button"
                                 class="customer-action-btn delete-btn"
                                 data-customer-action="delete"
                                 data-customer-id="${escapeHTML(customer.id)}"
                             >
-                                Delete
+                                ${t("Delete", "حذف")}
                             </button>
 
                         </td>
@@ -447,6 +494,8 @@ function renderCustomersPagination(totalPages) {
         html += `
 
             <button
+
+                type="button"
 
                 class="customer-page-btn ${page === currentPage ? "active" : ""}"
 
@@ -546,29 +595,29 @@ function showCustomerDetails(customerId) {
 
     Swal.fire({
 
-        title: "Customer Details",
+        title: t("Customer Details", "تفاصيل العميل"),
 
         html: `
 
             <div class="customer-details">
 
                 <p>
-                    <strong>Name:</strong>
+                    <strong>${t("Name:", "الاسم:")}</strong>
                     ${escapeHTML(customer.name)}
                 </p>
 
                 <p>
-                    <strong>Email:</strong>
+                    <strong>${t("Email:", "البريد الإلكتروني:")}</strong>
                     ${escapeHTML(customer.email)}
                 </p>
 
                 <p>
-                    <strong>Role:</strong>
-                    Customer
+                    <strong>${t("Role:", "الدور:")}</strong>
+                    ${t("Customer", "عميل")}
                 </p>
 
                 <p>
-                    <strong>Total Orders:</strong>
+                    <strong>${t("Total Orders:", "إجمالي الطلبات:")}</strong>
                     ${ordersCount}
                 </p>
 
@@ -576,7 +625,7 @@ function showCustomerDetails(customerId) {
 
         `,
 
-        confirmButtonText: "Close",
+        confirmButtonText: t("Close", "إغلاق"),
 
         confirmButtonColor: "#687c45"
 
@@ -610,17 +659,19 @@ function deleteCustomer(customerId) {
 
     Swal.fire({
 
-        title: "Delete Customer?",
+        title: t("Delete Customer?", "حذف العميل؟"),
 
-        text: `Are you sure you want to delete ${customer.name}?`,
+        text: getCurrentLanguage() === "ar"
+            ? `هل أنت متأكد أنك تريد حذف ${customer.name}؟`
+            : `Are you sure you want to delete ${customer.name}?`,
 
         icon: "warning",
 
         showCancelButton: true,
 
-        confirmButtonText: "Yes, Delete",
+        confirmButtonText: t("Yes, Delete", "نعم، احذف"),
 
-        cancelButtonText: "Cancel",
+        cancelButtonText: t("Cancel", "إلغاء"),
 
         confirmButtonColor: "#dc3545",
 
@@ -659,9 +710,12 @@ function deleteCustomer(customerId) {
 
                 icon: "success",
 
-                title: "Deleted!",
+                title: t("Deleted!", "تم الحذف!"),
 
-                text: "Customer deleted successfully.",
+                text: t(
+                    "Customer deleted successfully.",
+                    "تم حذف العميل بنجاح."
+                ),
 
                 confirmButtonColor: "#687c45"
 
@@ -678,9 +732,14 @@ function deleteCustomer(customerId) {
 
                 icon: "error",
 
-                title: "Error",
+                title: t("Error", "خطأ"),
 
-                text: "Could not delete customer."
+                text: t(
+                    "Could not delete customer.",
+                    "تعذر حذف العميل."
+                ),
+
+                confirmButtonColor: "#687c45"
 
             });
 
@@ -689,3 +748,5 @@ function deleteCustomer(customerId) {
     });
 
 }
+
+

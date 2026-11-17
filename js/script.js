@@ -1,4 +1,3 @@
-
 // =====================================
 // Import Modules
 // =====================================
@@ -66,11 +65,16 @@ import {
 // Checkout
 
 import {
-    initializeCheckout,
-    renderCheckout
+    initializeCheckout
 } from "./modules/checkout.js";
 
 import { initializePayment } from "./modules/payment.js";
+
+// Language
+
+import { initializeLanguage } from "./modules/language.js";
+
+
 // =====================================
 // Render Categories
 // =====================================
@@ -527,8 +531,6 @@ function handleLogin() {
     });
 
 }
-
-
 // =====================================
 // Load Profile
 // =====================================
@@ -709,6 +711,11 @@ function initApp() {
     console.log("Shopora App Started");
 
 
+    // Initialize Language
+
+    initializeLanguage();
+
+
     // Initialize Users
 
     initializeUsers();
@@ -748,11 +755,13 @@ function initApp() {
     // Initialize Cart
 
     initializeCart();
+
+
     // Initialize Checkout
 
-initializeCheckout();
+    initializeCheckout();
 
-initializePayment();
+    initializePayment();
 
     updateCartCount();
 
@@ -810,8 +819,6 @@ $(document).ready(function () {
     initApp();
 
 });
-
-
 // =====================================
 // SHOPORA - DARK / LIGHT MODE
 // =====================================
@@ -819,6 +826,7 @@ $(document).ready(function () {
 $(document).ready(function () {
 
     const themeToggle = $("#themeToggle");
+
 
     // Apply Theme
 

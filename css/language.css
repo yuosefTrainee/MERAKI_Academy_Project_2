@@ -1,0 +1,211 @@
+/* =========================================
+   SHOPORA - Arabic & English Language Style
+========================================= */
+
+/* Language button */
+#languageToggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-color, #ddd);
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#languageToggle:hover {
+    transform: translateY(-2px);
+    opacity: 0.8;
+}
+
+/* English direction */
+html[dir="ltr"] body {
+    direction: ltr;
+    text-align: left;
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+/* Arabic direction */
+html[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+    font-family: "Cairo", Tahoma, Arial, sans-serif;
+}
+
+/* Main layout direction */
+html[dir="rtl"] .navbar,
+html[dir="rtl"] .nav-container,
+html[dir="rtl"] .nav-actions,
+html[dir="rtl"] .nav-links {
+    direction: rtl;
+}
+
+/* Text alignment */
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] p,
+html[dir="rtl"] label {
+    text-align: right;
+}
+
+/* Form fields */
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Buttons */
+html[dir="rtl"] button {
+    font-family: "Cairo", Tahoma, Arial, sans-serif;
+}
+
+/* Lists */
+html[dir="rtl"] ul,
+html[dir="rtl"] ol {
+    padding-right: 25px;
+    padding-left: 0;
+}
+
+/* Tables */
+html[dir="rtl"] th,
+html[dir="rtl"] td {
+    text-align: right;
+}
+
+/* Cards */
+html[dir="rtl"] .product-card,
+html[dir="rtl"] .category-card {
+    direction: rtl;
+}
+
+/* Icons spacing */
+html[dir="rtl"] .fa-solid,
+html[dir="rtl"] .fa-regular {
+    margin-left: 5px;
+}
+
+/* Keep numbers and email addresses readable */
+html[dir="rtl"] input[type="email"],
+html[dir="rtl"] input[type="number"],
+html[dir="rtl"] input[type="tel"],
+html[dir="rtl"] .price,
+html[dir="rtl"] .product-price {
+    direction: ltr;
+    text-align: right;
+}
+/* Center Admin Products Pagination in Arabic */
+html[dir="rtl"] #adminPagination {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    direction: ltr !important;
+    width: 100% !important;
+    margin: 25px auto !important;
+    float: none !important;
+    text-align: center !important;
+    gap: 8px;
+}
+
+html[dir="rtl"] #adminPagination .pagination-numbers {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 8px;
+}
+/* =====================================
+   CUSTOMERS TABLE - RTL DESIGN
+===================================== */
+
+html[dir="rtl"] #customersTableContainer {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] #customersTableContainer .admin-table {
+    width: 100%;
+    direction: rtl;
+    border-collapse: collapse;
+}
+
+html[dir="rtl"] #customersTableContainer .admin-table th,
+html[dir="rtl"] #customersTableContainer .admin-table td {
+    text-align: right !important;
+    padding: 16px 20px;
+    vertical-align: middle;
+}
+
+/* Customer Name and Avatar */
+
+html[dir="rtl"] #customersTableContainer .customer-name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    white-space: nowrap;
+}
+
+/* Customer Avatar */
+
+html[dir="rtl"] #customersTableContainer .customer-avatar {
+    flex-shrink: 0;
+}
+
+/* Action Buttons */
+
+html[dir="rtl"] #customersTableContainer td:last-child {
+    white-space: nowrap;
+    text-align: center !important;
+}
+
+html[dir="rtl"] #customersTableContainer .customer-action-btn {
+    margin: 3px;
+    min-width: 65px;
+}
+
+/* Orders Count and Role */
+
+html[dir="rtl"] #customersTableContainer .customer-orders-count,
+html[dir="rtl"] #customersTableContainer .customer-role {
+    text-align: center;
+}
+
+/* Table Header */
+
+html[dir="rtl"] #customersTableContainer .admin-table th {
+    font-weight: 700;
+    background-color: #f3f5ef;
+}
+
+/* Table Rows */
+
+html[dir="rtl"] #customersTableContainer .admin-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+html[dir="rtl"] #customersTableContainer .admin-table tbody tr:hover {
+    background-color: #f9faf6;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    #languageToggle {
+        padding: 7px 9px;
+        font-size: 12px;
+    }
+
+    html[dir="rtl"] .nav-actions {
+        direction: rtl;
+    }
+}

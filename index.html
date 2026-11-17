@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +15,11 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
             rel="stylesheet">
 
+        <!-- Arabic Font -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
+
         <!-- CSS Files -->
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/components.css">
@@ -23,6 +27,8 @@
         <link rel="stylesheet" href="css/admin.css">
         <link rel="stylesheet" href="css/responsive.css">
         <link rel="stylesheet" href="css/customer-products.css">
+        <link rel="stylesheet" href="css/language.css">
+
         <!-- Font Awesome -->
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -79,15 +85,23 @@
 
                 <div class="nav-actions">
 
+                    <!-- Language Toggle -->
+                    <button id="languageToggle" aria-label="Change language">
+                        العربية
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
                     <button id="themeToggle" aria-label="Toggle theme">
                         <i class="fa-solid fa-moon"></i>
                     </button>
 
+                    <!-- Shopping Cart -->
                     <button data-page="cart" aria-label="Shopping cart">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <span id="cartCount">0</span>
                     </button>
 
+                    <!-- Authentication -->
                     <button data-page="login" id="authButton">
                         Login
                     </button>
@@ -178,8 +192,7 @@
                 </section>
 
             </section>
-
-            <!-- ================= PRODUCTS PAGE ================= -->
+                        <!-- ================= PRODUCTS PAGE ================= -->
 
             <section id="products" class="page hidden">
 
@@ -398,6 +411,11 @@
                             required>
 
                         <input
+                            type="password"
+                            id="registerPassword"
+                            placeholder="Password"
+                            required>
+                                                    <input
                             type="password"
                             id="registerPassword"
                             placeholder="Password"
@@ -636,8 +654,7 @@
                 </div>
 
                 <!-- Call To Action -->
-
-                <div class="about-cta">
+                                 <div class="about-cta">
 
                     <h2>Ready to Start Shopping?</h2>
 
@@ -840,8 +857,7 @@
                                 <div class="stat-card">
 
                                     <div class="stat-icon">
-                                        <i
-                                            class="fa-solid fa-cart-shopping"></i>
+                                        <i class="fa-solid fa-cart-shopping"></i>
                                     </div>
 
                                     <div>
@@ -876,8 +892,7 @@
                                     </div>
 
                                 </div>
-
-                            </div>
+                                                            </div>
 
                             <!-- Charts Section -->
 
@@ -909,8 +924,9 @@
 
                                 <div id="recentOrdersContainer">
 
-                                    <p class="empty-state">No orders available
-                                        yet.</p>
+                                    <p class="empty-state">
+                                        No orders available yet.
+                                    </p>
 
                                 </div>
 
@@ -933,37 +949,30 @@
 
                             <div class="admin-products-toolbar">
 
-                                <!-- Search -->
-
                                 <input
                                     type="search"
                                     id="adminProductSearch"
                                     placeholder="Search products by name or brand...">
 
-                                <!-- Category Filter -->
-
                                 <select id="adminCategoryFilter">
 
                                     <option value="all">All Categories</option>
 
-                                    <option
-                                        value="Electronics">Electronics</option>
+                                    <option value="Electronics">Electronics</option>
 
                                     <option value="Clothes">Clothes</option>
 
                                     <option value="Shoes">Shoes</option>
 
-                                    <option
-                                        value="Accessories">Accessories</option>
+                                    <option value="Accessories">Accessories</option>
 
                                     <option value="Watches">Watches</option>
 
-                                    <option value="Home & Living">Home &
-                                        Living</option>
+                                    <option value="Home & Living">
+                                        Home & Living
+                                    </option>
 
                                 </select>
-
-                                <!-- Stock Filter -->
 
                                 <select id="adminStockFilter">
 
@@ -977,24 +986,21 @@
 
                                 </select>
 
-                                <!-- Sorting -->
-
                                 <select id="adminSortFilter">
 
-                                    <option value="default">Default
-                                        Sorting</option>
+                                    <option value="default">Default Sorting</option>
 
-                                    <option value="name-asc">Name: A to
-                                        Z</option>
+                                    <option value="name-asc">Name: A to Z</option>
 
-                                    <option value="name-desc">Name: Z to
-                                        A</option>
+                                    <option value="name-desc">Name: Z to A</option>
 
-                                    <option value="price-asc">Price: Low to
-                                        High</option>
+                                    <option value="price-asc">
+                                        Price: Low to High
+                                    </option>
 
-                                    <option value="price-desc">Price: High to
-                                        Low</option>
+                                    <option value="price-desc">
+                                        Price: High to Low
+                                    </option>
 
                                     <option value="newest">Newest First</option>
 
@@ -1006,7 +1012,9 @@
 
                             <!-- Add / Edit Product Form -->
 
-                            <form id="productForm" class="product-form hidden"
+                            <form
+                                id="productForm"
+                                class="product-form hidden"
                                 novalidate>
 
                                 <h3>Add New Product</h3>
@@ -1197,9 +1205,7 @@
                                         type="button"
                                         id="cancelProductBtn"
                                         class="btn-secondary">
-
                                         Cancel
-
                                     </button>
 
                                 </div>
@@ -1216,12 +1222,10 @@
 
                             <!-- Products Pagination -->
 
-                            <div id="adminPagination"
-                                class="admin-pagination"></div>
+                            <div id="adminPagination"></div>
 
                         </div>
-
-                        <!-- ================= MANAGE ORDERS ================= -->
+                                                <!-- ================= MANAGE ORDERS ================= -->
 
                         <div id="adminOrders" class="admin-section hidden">
 
