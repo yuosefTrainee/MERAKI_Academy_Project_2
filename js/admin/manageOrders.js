@@ -375,23 +375,39 @@ function displayOrders() {
                             </span>
 
                         </td>
+                        <td class="order-actions">
 
-                        <td>
-
+                            <!-- Details Button -->
                             <button
-                                class="order-action-btn"
+                                class="order-icon-btn details-icon-btn"
                                 data-order-action="details"
                                 data-order-id="${escapeHTML(order.id)}"
+                                title="View Details"
+                                aria-label="View Details"
                             >
-                                Details
+                                <i class="fa-solid fa-eye"></i>
                             </button>
 
+                            <!-- Update Button -->
                             <button
-                                class="order-action-btn"
+                                class="order-icon-btn edit-icon-btn"
                                 data-order-action="status"
                                 data-order-id="${escapeHTML(order.id)}"
+                                title="Update Order"
+                                aria-label="Update Order"
                             >
-                                Update
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+
+                            <!-- Delete Button -->
+                            <button
+                                class="order-icon-btn delete-icon-btn"
+                                data-order-action="delete"
+                                data-order-id="${escapeHTML(order.id)}"
+                                title="Delete Order"
+                                aria-label="Delete Order"
+                            >
+                                <i class="fa-solid fa-trash"></i>
                             </button>
 
                         </td>
@@ -488,11 +504,67 @@ function initializeOrderActions() {
                 updateOrderStatus(orderId);
 
             }
+            if (action === "delete") {
+                deleteOrder(orderId);
+            }
 
         });
 
     });
 
+}
+
+// =====================================
+// Delete Order
+// =====================================
+
+async function deleteOrder(orderId) {
+
+    if (!hasAdminPermission()) return;
+
+    const result = await Swal.fire({
+        icon: "warning",
+        title: "Delete Order?",
+        text: "Are you sure you want to delete this order?",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Delete",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "#dc2626",
+        cancelButtonColor: "#687c45"
+    });
+
+    if (!result.isConfirmed) return;
+
+    if (!hasAdminPermission()) return;
+
+    const orders = getOrders();
+
+    const updatedOrders = orders.filter(
+        order => String(order.id) !== String(orderId)
+    );
+
+    if (updatedOrders.length === orders.length) return;
+
+    const saved = saveData("orders", updatedOrders);
+
+    if (!saved) {
+        Swal.fire({
+            icon: "error",
+            title: "Delete Failed",
+            text: "Could not delete this order."
+        });
+
+        return;
+    }
+
+    displayOrders();
+
+    Swal.fire({
+        icon: "success",
+        title: "Deleted!",
+        text: "Order deleted successfully.",
+        confirmButtonColor: "#687c45"
+    });
 }
 
 

@@ -1,4 +1,3 @@
-
 // =====================================
 // SHOPORA - PAYMENT MODULE
 // =====================================
@@ -128,6 +127,100 @@ export function renderPayment() {
                         </div>
 
                     </label>
+
+
+                    <!-- Demo Card Details -->
+
+                    <div id="demoCardFields" class="demo-card-fields hidden">
+
+                        <h4>
+                            <i class="fa-solid fa-credit-card"></i>
+                            Card Information
+                        </h4>
+
+                        <div class="card-form-group">
+
+                            <label for="cardHolder">
+                                Cardholder Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cardHolder"
+                                placeholder="Enter cardholder name"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+
+                        <div class="card-form-group">
+
+                            <label for="cardNumber">
+                                Card Number
+                            </label>
+
+                            <input
+                                type="text"
+                                id="cardNumber"
+                                placeholder="1234 5678 9012 3456"
+                                maxlength="19"
+                                inputmode="numeric"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+
+                        <div class="card-form-row">
+
+                            <div class="card-form-group">
+
+                                <label for="cardExpiry">
+                                    Expiry Date
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="cardExpiry"
+                                    placeholder="MM/YY"
+                                    maxlength="5"
+                                    inputmode="numeric"
+                                    autocomplete="off"
+                                >
+
+                            </div>
+
+
+                            <div class="card-form-group">
+
+                                <label for="cardCVV">
+                                    CVV
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="cardCVV"
+                                    placeholder="123"
+                                    maxlength="4"
+                                    inputmode="numeric"
+                                    autocomplete="off"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <p class="demo-card-note">
+
+                            <i class="fa-solid fa-circle-info"></i>
+
+                            Demo card only. Do not enter real card information.
+
+                        </p>
+
+                    </div>
 
 
                     <div class="demo-payment-notice">
@@ -450,9 +543,67 @@ async function handlePayment(event) {
         let paymentStatus = "Pending";
 
 
-        // Demo Card Simulation
+        // Demo Card Validation and Simulation
 
         if (paymentMethod === "Demo Card") {
+
+            const cardHolder = document.getElementById("cardHolder")?.value.trim() || "";
+
+            const cardNumber = (
+                document.getElementById("cardNumber")?.value || ""
+            ).replace(/\s/g, "");
+
+            const cardExpiry = document.getElementById("cardExpiry")?.value.trim() || "";
+
+            const cardCVV = document.getElementById("cardCVV")?.value.trim() || "";
+
+
+            // Validate Expiry Date
+
+            const expiryMatch = cardExpiry.match(
+                /^(0[1-9]|1[0-2])\/(\d{2})$/
+            );
+
+            let validExpiry = false;
+
+            if (expiryMatch) {
+
+                const expiryMonth = Number(expiryMatch[1]);
+
+                const expiryYear = 2000 + Number(expiryMatch[2]);
+
+                const now = new Date();
+
+                validExpiry =
+                    expiryYear > now.getFullYear() ||
+                    (
+                        expiryYear === now.getFullYear() &&
+                        expiryMonth >= now.getMonth() + 1
+                    );
+
+            }
+
+
+            // Validate Card Information
+
+            if (
+                !cardHolder ||
+                !/^\d{16}$/.test(cardNumber) ||
+                !validExpiry ||
+                !/^\d{3,4}$/.test(cardCVV)
+            ) {
+
+                await showMessage(
+                    "warning",
+                    "Invalid Card Information",
+                    "Please enter a name, a 16-digit demo card number, a valid future expiry date (MM/YY), and a 3 or 4-digit CVV."
+                );
+
+                return;
+            }
+
+
+            // Demo Card Simulation
 
             const result = await Swal.fire({
 
@@ -564,6 +715,29 @@ export function initializePayment() {
         renderPayment();
 
         showPage("payment");
+
+    });
+
+
+    // Show / Hide Demo Card Fields
+
+    document.addEventListener("change", function (event) {
+
+        if (event.target.name !== "paymentMethod") return;
+
+        const cardFields = document.getElementById("demoCardFields");
+
+        if (!cardFields) return;
+
+        if (event.target.value === "Demo Card") {
+
+            cardFields.classList.remove("hidden");
+
+        } else {
+
+            cardFields.classList.add("hidden");
+
+        }
 
     });
 

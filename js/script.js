@@ -886,3 +886,106 @@ $(document).ready(function () {
     });
 
 });
+
+// =====================================
+// ADMIN TOP CONTROLS
+// =====================================
+
+$(document).ready(function () {
+
+    const adminThemeButton = $("#adminThemeToggle");
+    const adminLanguageButton = $("#adminLanguageToggle");
+
+    // Update Admin Theme Button
+    function updateAdminThemeButton() {
+
+        const currentTheme = localStorage.getItem("shopora-theme") || "light";
+
+        if (currentTheme === "dark") {
+
+            adminThemeButton.html(
+                '<i class="fa-solid fa-sun"></i>'
+            );
+
+            adminThemeButton.attr("title", "Light Mode");
+
+        } else {
+
+            adminThemeButton.html(
+                '<i class="fa-solid fa-moon"></i>'
+            );
+
+            adminThemeButton.attr("title", "Dark Mode");
+
+        }
+    }
+
+
+    // Update Admin Language Button
+    function updateAdminLanguageButton() {
+
+        const currentLanguage =
+            localStorage.getItem("shopora-language") || "en";
+
+        if (currentLanguage === "ar") {
+
+            adminLanguageButton.text("EN");
+
+            adminLanguageButton.attr("title", "Switch to English");
+
+        } else {
+
+            adminLanguageButton.text("ع");
+
+            adminLanguageButton.attr("title", "التغيير إلى العربية");
+
+        }
+    }
+
+
+    // Initial State
+    updateAdminThemeButton();
+    updateAdminLanguageButton();
+
+
+    // Admin Theme Button
+    adminThemeButton.on("click", function () {
+
+        $("#themeToggle").trigger("click");
+
+        setTimeout(updateAdminThemeButton, 50);
+
+    });
+
+
+    // Admin Language Button
+    adminLanguageButton.on("click", function () {
+
+        $("#languageToggle").trigger("click");
+
+        setTimeout(updateAdminLanguageButton, 100);
+
+    });
+
+
+    // Listen for Theme Changes
+    const themeObserver = new MutationObserver(function () {
+
+        updateAdminThemeButton();
+
+    });
+
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"]
+    });
+
+
+    // Listen for Language Changes
+    window.addEventListener("shopora:language-changed", function () {
+
+        updateAdminLanguageButton();
+
+    });
+
+});

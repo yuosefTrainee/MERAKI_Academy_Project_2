@@ -8,9 +8,14 @@ import { showPage } from "./navigation.js";
 import { isFavorite } from "./favorites.js";
 import { addToCart } from "./cart.js";
 
+import { renderProductReviews } from "./reviews.js";
+
 
 // Store Object URLs to clean them later
 let objectUrls = [];
+
+let currentProductId = null;
+let currentProductName = "";
 
 
 // =====================================
@@ -53,17 +58,13 @@ function formatPrice(price) {
 
 async function getProductImage(imageId) {
 
-    if (!imageId) {
-        return null;
-    }
+    if (!imageId) return null;
 
     try {
 
         const imageBlob = await getImage(imageId);
 
-        if (!imageBlob) {
-            return null;
-        }
+        if (!imageBlob) return null;
 
         const imageUrl = URL.createObjectURL(imageBlob);
 
@@ -285,9 +286,7 @@ export async function renderFeaturedProducts() {
 
     const container = $("#featuredProductsContainer");
 
-    if (!container.length) {
-        return;
-    }
+    if (!container.length) return;
 
     const products = getProducts();
 
@@ -317,8 +316,6 @@ function getFilteredProducts() {
     const sortValue = $("#sortProducts").val() || "default";
 
 
-    // Search
-
     if (searchValue) {
 
         products = products.filter(product => {
@@ -338,8 +335,6 @@ function getFilteredProducts() {
     }
 
 
-    // Category Filter
-
     if (categoryValue !== "all") {
 
         products = products.filter(product => {
@@ -350,8 +345,6 @@ function getFilteredProducts() {
 
     }
 
-
-    // Sorting
 
     if (sortValue === "low-high") {
 
@@ -379,9 +372,7 @@ export async function renderCustomerProducts() {
 
     const container = $("#productsContainer");
 
-    if (!container.length) {
-        return;
-    }
+    if (!container.length) return;
 
     const products = getFilteredProducts();
 
@@ -418,6 +409,7 @@ export async function showProductDetails(productId) {
 
     );
 
+
     if (!product) {
 
         Swal.fire({
@@ -432,6 +424,11 @@ export async function showProductDetails(productId) {
 
     }
 
+
+    currentProductId = product.id;
+    currentProductName = product.name;
+
+
     const imageUrl = await getProductImage(product.imageId);
 
     const imageContent = imageUrl
@@ -444,6 +441,7 @@ export async function showProductDetails(productId) {
 
     const container = $("#productDetailsContainer");
 
+
     container.html(`
 
         <div class="product-details-card">
@@ -453,6 +451,7 @@ export async function showProductDetails(productId) {
                 ${imageContent}
 
             </div>
+
 
             <div class="product-details-info">
 
@@ -601,9 +600,20 @@ export async function showProductDetails(productId) {
 
         </div>
 
+
+        <!-- CUSTOMER REVIEWS -->
+
+        <div id="productReviews"></div>
+
     `);
 
+
     showPage("productDetails");
+
+
+    // Display Reviews Below Product Details
+
+    renderProductReviews(product.id, product.name);
 
 }
 
@@ -683,3 +693,20 @@ export function initializeProductDetails() {
     });
 
 }
+
+
+// =====================================
+// Refresh Reviews When Language Changes
+// =====================================
+
+window.addEventListener("shopora:language-changed", function () {
+
+    if (!currentProductId) return;
+
+    const reviewsContainer = document.getElementById("productReviews");
+
+    if (!reviewsContainer) return;
+
+    renderProductReviews(currentProductId, currentProductName);
+
+});

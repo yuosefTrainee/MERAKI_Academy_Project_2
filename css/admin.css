@@ -414,7 +414,7 @@ body:has(#adminDashboard.active) .footer {
     width: 100%;
     overflow-x: auto;
     margin-top: 20px;
-    background: #fff;
+    
     border-radius: 12px;
 }
 
@@ -656,7 +656,7 @@ body:has(#adminDashboard.active) .footer {
     width: 100%;
     overflow-x: auto;
     margin-top: 20px;
-    background: white;
+    
     border-radius: 12px;
 }
 
@@ -677,7 +677,7 @@ body:has(#adminDashboard.active) .footer {
 #customersTableContainer .admin-table td {
     padding: 16px;
     border-bottom: 1px solid #eee;
-    color: #555;
+    color: #adadad;
     font-size: 14px;
 }
 
@@ -693,7 +693,7 @@ body:has(#adminDashboard.active) .footer {
     align-items: center;
     gap: 12px;
     font-weight: 500;
-    color: #333;
+    
 }
 
 .customer-avatar {
@@ -1054,4 +1054,57 @@ body:has(#adminDashboard.active) .footer {
         overflow-x: auto;
     }
 
+}
+/* ORDER ACTION ICONS */
+
+.order-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.order-icon-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s ease;
+}
+
+/* Edit Icon */
+.edit-icon-btn {
+    background-color: #687c45;
+}
+
+.edit-icon-btn:hover {
+    background-color: #526438;
+    transform: translateY(-2px);
+}
+
+/* Delete Icon */
+.delete-icon-btn {
+    background-color: #dc3545;
+}
+
+.delete-icon-btn:hover {
+    background-color: #b91c1c;
+    transform: translateY(-2px);
+}
+/* FIX DETAILS BUTTON COLOR */
+
+button.order-icon-btn.details-icon-btn {
+    background-color: #3b82f6 !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    cursor: pointer;
+}
+
+button.order-icon-btn.details-icon-btn:hover {
+    background-color: #2563eb !important;
+    transform: translateY(-2px);
 }
